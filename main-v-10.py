@@ -47,7 +47,7 @@ def display_and_split_biggest_rectangle_part(image_path):
 
         # Function to find the main content within a section (removing white borders)
         def crop_white_borders(section_image):
-            if section_image is None or section_image.size == 0:
+            if section_image.size == 0:
                 return section_image # Return empty if input is empty
             gray_section = cv2.cvtColor(section_image, cv2.COLOR_BGR2GRAY)
             # Adjust threshold if needed for better results
@@ -121,11 +121,11 @@ def extract_info_sections(info_section_image):
 def split_answer_section_horizontally(answer_section_image):
     """
     Splits the answer_section_image (NumPy array) horizontally into two equal halves,
-    and then each half into 15 columns. Returns all these parts as a list of NumPy arrays.
+    returning them as NumPy arrays.
     """
     if answer_section_image is None or answer_section_image.size == 0:
         print(f"❌ Error: Answer section image is empty or None.")
-        return [], [] # Return empty lists on failure
+        return None, None
 
     img_height, img_width, _ = answer_section_image.shape
 
@@ -135,19 +135,7 @@ def split_answer_section_horizontally(answer_section_image):
     bottom_half = answer_section_image[middle_y:img_height, 0:img_width]
 
     print("✅ Answer section split into two halves (in memory).")
-
-    num_columns = 15
-
-    # Split top_half into 15 columns
-    # Using np.array_split to handle cases where width is not perfectly divisible by num_columns
-    top_half_cols = np.array_split(top_half, num_columns, axis=1)
-    print(f"✅ Top half split into {len(top_half_cols)} columns.")
-
-    # Split bottom_half into 15 columns
-    bottom_half_cols = np.array_split(bottom_half, num_columns, axis=1)
-    print(f"✅ Bottom half split into {len(bottom_half_cols)} columns.")
-
-    return top_half_cols, bottom_half_cols
+    return top_half, bottom_half
 
 
 # === Main execution block ===
@@ -170,30 +158,17 @@ if __name__ == "__main__":
         if total_marks_img is not None: cv2.imshow("Total Marks", total_marks_img)
         cv2.waitKey(1) # Small wait key to allow windows to pop up
 
-    # Step 3: Split the answer section if available and then its halves into columns
+    # Step 3: Split the answer section if available
     if answer_section_img is not None and answer_section_img.size > 0:
-        print("\n--- Splitting Answer Section into Halves and then Columns ---")
-        answer_top_half_cols, answer_bottom_half_cols = split_answer_section_horizontally(answer_section_img)
+        print("\n--- Splitting Answer Section into Halves ---")
+        answer_top_half_img, answer_bottom_half_img = split_answer_section_horizontally(answer_section_img)
 
-        # Display top half columns
-        if answer_top_half_cols:
-            print("\nDisplaying Answer Top Half Columns:")
-            for i, col_img in enumerate(answer_top_half_cols):
-                cv2.imshow(f"Top Half Col {i+1}", col_img)
-                # To see each column individually, you might want a short waitKey here
-                # cv2.waitKey(100) # Wait 100ms for each column display
-
-        # Display bottom half columns
-        if answer_bottom_half_cols:
-            print("\nDisplaying Answer Bottom Half Columns:")
-            for i, col_img in enumerate(answer_bottom_half_cols):
-                cv2.imshow(f"Bottom Half Col {i+1}", col_img)
-                # To see each column individually, you might want a short waitKey here
-                # cv2.waitKey(100) # Wait 100ms for each column display
-
-        cv2.waitKey(0) # Wait for a key press to close all column windows
+        # Optional: Display answer halves (no saving)
+        if answer_top_half_img is not None: cv2.imshow("Answer Top Half", answer_top_half_img)
+        if answer_bottom_half_img is not None: cv2.imshow("Answer Bottom Half", answer_bottom_half_img)
+        cv2.waitKey(0) # Wait for a key press to close all windows
         cv2.destroyAllWindows()
     else:
-        print("\nAnswer section not available for splitting into columns.")
+        print("\nAnswer section not available for splitting.")
 
     print("\n--- Processing Complete ---")
