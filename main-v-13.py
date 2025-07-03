@@ -54,7 +54,7 @@ def detect_filled_circles(image_path):
 
         min_circle_area = 200 # Adjust this based on your image and circle size
         max_circle_area = 2000 # Adjust this based on your image and circle size
-        min_circularity = 0.7 # A value close to 1 indicates a perfect circle
+        min_circularity = 0.5 # A value close to 1 indicates a perfect circle
 
         # Store potential options along with their y-coordinates to sort them later
         potential_options = []
@@ -150,7 +150,7 @@ if __name__ == '__main__':
     # You will need to replace 'omr_single.png' with the actual path to your OMR image
     # For testing, save the image provided in the prompt as 'omr_single.png' in the
     # same directory as this script.
-    image_path = 'answer_columns/question_8.png' # Replace with your image file name
+    image_path = 'answer_columns/question_2.png' # Replace with your image file name
 
     processed_image, selected_numbers = detect_filled_circles(image_path)
 

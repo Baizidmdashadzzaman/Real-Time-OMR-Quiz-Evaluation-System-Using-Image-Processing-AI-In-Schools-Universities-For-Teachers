@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
 import os
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont  # Ensure PIL is imported
+
 
 # --- Section 1: Image Preprocessing and Splitting ---
 
@@ -23,7 +24,7 @@ def display_and_split_biggest_rectangle_part(image_path):
 
     if image is None:
         print(f"❌ Error: Could not load image from {image_path}")
-        return None, None, None # Return None for all on failure
+        return None, None, None  # Return None for all on failure
 
     # Convert to grayscale for contour detection
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -46,9 +47,9 @@ def display_and_split_biggest_rectangle_part(image_path):
         # and if its area is significant enough to be considered the OMR sheet.
         # Area threshold (1000) might need adjustment based on image resolution.
         if len(approx) == 4 and cv2.contourArea(approx) > 1000:
-            x, y, w, h = cv2.boundingRect(approx) # Get bounding rectangle coordinates
+            x, y, w, h = cv2.boundingRect(approx)  # Get bounding rectangle coordinates
             area = w * h
-            if area > max_area: # Keep track of the biggest rectangle found
+            if area > max_area:  # Keep track of the biggest rectangle found
                 max_area = area
                 biggest_rect_bbox = (x, y, w, h)
 
@@ -65,7 +66,7 @@ def display_and_split_biggest_rectangle_part(image_path):
         # Function to find the main content within a section (removing surrounding white borders)
         def crop_white_borders(section_image):
             if section_image is None or section_image.size == 0:
-                return section_image, (0, 0, 0, 0) # Return empty if input is empty
+                return section_image, (0, 0, 0, 0)  # Return empty if input is empty
             gray_section = cv2.cvtColor(section_image, cv2.COLOR_BGR2GRAY)
             # Re-threshold the section to find its internal content
             _, thresh_section = cv2.threshold(gray_section, 200, 255, cv2.THRESH_BINARY_INV)
@@ -77,17 +78,20 @@ def display_and_split_biggest_rectangle_part(image_path):
                 x_sec, y_sec, w_sec, h_sec = cv2.boundingRect(largest_contour_section)
                 cropped_img = section_image[y_sec:y_sec + h_sec, x_sec:x_sec + w_sec]
                 return cropped_img, (x_sec, y_sec, w_sec, h_sec)
-            return section_image, (0, 0, section_image.shape[1], section_image.shape[0]) # Return original if no significant contours found
+            return section_image, (0, 0, section_image.shape[1],
+                                   section_image.shape[0])  # Return original if no significant contours found
 
         # Apply border cropping to both sections
         answer_section_without_outer, _ = crop_white_borders(answer_section_with_outer)
-        info_section_without_outer, info_section_inner_bbox = crop_white_borders(info_section_with_outer) # Get inner bbox too
+        info_section_without_outer, info_section_inner_bbox = crop_white_borders(
+            info_section_with_outer)  # Get inner bbox too
 
         print("✅ Main OMR sheet sections extracted (in memory).")
         return answer_section_without_outer, info_section_without_outer, biggest_rect_bbox
     else:
         print("❌ No significant rectangular OMR sheet found. Try adjusting the threshold or contour area.")
-        return None, None, None # Return None for all on failure
+        return None, None, None  # Return None for all on failure
+
 
 def extract_info_sections(info_section_image):
     """
@@ -108,7 +112,7 @@ def extract_info_sections(info_section_image):
     """
     if info_section_image is None or info_section_image.size == 0:
         print("❌ Error: Info section image is empty or None.")
-        return None, None, None, (0,0)
+        return None, None, None, (0, 0)
 
     img_height, img_width, _ = info_section_image.shape
 
@@ -129,7 +133,7 @@ def extract_info_sections(info_section_image):
     student_id_part = None
     subject_code_part = None
     total_marks_part = None
-    total_marks_rel_bbox_y = (0, 0) # Store relative Y coordinates for total marks section
+    total_marks_rel_bbox_y = (0, 0)  # Store relative Y coordinates for total marks section
 
     # Perform cropping, ensuring valid dimensions
     if student_id_end_y > student_id_start_y:
@@ -153,6 +157,7 @@ def extract_info_sections(info_section_image):
 
     return student_id_part, subject_code_part, total_marks_part, total_marks_rel_bbox_y
 
+
 def split_answer_section_horizontally(answer_section_image, num_columns=15):
     """
     Splits the answer_section_image (NumPy array) horizontally into two equal halves,
@@ -169,7 +174,7 @@ def split_answer_section_horizontally(answer_section_image, num_columns=15):
     """
     if answer_section_image is None or answer_section_image.size == 0:
         print(f"❌ Error: Answer section image is empty or None.")
-        return [], [] # Return empty lists on failure
+        return [], []  # Return empty lists on failure
 
     img_height, img_width, _ = answer_section_image.shape
 
@@ -192,126 +197,247 @@ def split_answer_section_horizontally(answer_section_image, num_columns=15):
 
     return top_half_cols, bottom_half_cols
 
-# --- Section 2: Circle Detection and Option Numbering ---
 
-def detect_filled_circles_in_segment(image_np_array, min_circle_area=150, max_circle_area=2000, min_circularity=0.7, fill_intensity_threshold=140):
+# --- Section 2: Circle Detection and Option Numbering (Revised and Fixed for Debugging) ---
+
+def detect_filled_circles_in_segment(image_np_array, debug_mode=True, column_key="Unknown Column"):
     """
-    Detects filled circles in a given image segment (NumPy array).
-    Assigns option numbers (1, 2, 3, 4...) based on vertical position of the circles.
+    Detects which option (1, 2, 3, or 4) is selected in an image segment (column).
+    This function is adapted from the provided detect_selected_option, using
+    predefined ROIs and intensity analysis for robustness against faint marks.
 
     Args:
-        image_np_array (np.array): The image segment (NumPy array) to process.
-        min_circle_area (int): Minimum area for a contour to be considered a circle.
-        max_circle_area (int): Maximum area for a contour to be considered a circle.
-        min_circularity (float): Minimum circularity (0 to 1, 1 is perfect circle).
-        fill_intensity_threshold (int): Max mean pixel intensity for a circle to be considered filled (0-255).
+        image_np_array (np.array): A NumPy array representing a single column segment.
+        debug_mode (bool): If True, will display ROIs and print detailed debugging info.
+        column_key (str): Identifier for the column being processed (e.g., "Top_Col_1").
 
     Returns:
         tuple: (selected_option_numbers, all_option_details)
-            - selected_option_numbers (list): A list of integers representing the numbers of the selected options within this segment.
-            - all_option_details (list): A list of dictionaries, each containing
-                                        {'option_num': int, 'center': (x, y), 'radius': int, 'is_filled': bool}
-                                        for all detected circular regions, sorted by y-coordinate.
+               where selected_option_numbers is a list of integers (e.g., [1])
+               and all_option_details is a list of dicts. Each dict contains:
+               'option_num', 'center', 'radius', 'is_filled'.
     """
-    # Convert image to grayscale for processing
-    gray = cv2.cvtColor(image_np_array, cv2.COLOR_BGR2GRAY)
+    if image_np_array is None or image_np_array.size == 0:
+        if debug_mode:
+            print(f"Debug ({column_key}): Warning: Empty image_np_array provided.")
+        return [], []
 
-    # For debugging: Uncomment to see the grayscale segment (inside function)
-    # cv2.imshow("Grayscale Segment (inside detect_filled_circles_in_segment)", gray)
-    # cv2.waitKey(1)
+    try:
+        # Convert NumPy array (BGR) to PIL Image (L for grayscale)
+        # Create a copy for drawing if in debug mode
+        if debug_mode:
+            img_to_draw = image_np_array.copy()
+            gray_for_pil = cv2.cvtColor(image_np_array, cv2.COLOR_BGR2GRAY)
+        else:
+            gray_for_pil = cv2.cvtColor(image_np_array, cv2.COLOR_BGR2GRAY)
 
-    # Apply adaptive thresholding to enhance circles.
-    thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-                                   cv2.THRESH_BINARY_INV, 11, 2)
-    # For debugging: Uncomment to see the thresholded segment (inside function)
-    # cv2.imshow("Thresholded Segment (inside detect_filled_circles_in_segment)", thresh)
-    # cv2.waitKey(1)
+        # --- Optional: Adaptive Thresholding for Robustness ---
+        # Uncomment and experiment with these parameters if simple grayscale isn't enough
+        # blockSize: Should be an odd number (e.g., 11, 15, 21).
+        # C: Constant subtracted from the mean or weighted mean. Smaller values mean more pixels are black.
+        # if adaptive_thresholding:
+        #    thresh_img_np = cv2.adaptiveThreshold(gray_for_pil, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+        #                                          cv2.THRESH_BINARY_INV, 15, 5) # Example parameters
+        #    img_pil = Image.fromarray(thresh_img_np)
+        # else:
+        img_pil = Image.fromarray(gray_for_pil)  # Default: use simple grayscale
 
+    except Exception as e:
+        print(f"Debug ({column_key}): Error converting NumPy array to PIL Image in segment detection: {e}")
+        return [], []
 
-    # Find contours in the thresholded image
-    contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-                                   cv2.CHAIN_APPROX_SIMPLE)
+    width, height = img_pil.size
 
-    potential_options = []
+    # --- Define Regions of Interest (ROIs) for each option within the segment ---
+    # These parameters are critical and might need fine-tuning for your specific OMR.
+    # They are relative to the *current segment image* (col_img).
 
-    # Loop over the found contours to identify potential circles
-    for c in contours:
-        # Calculate perimeter and approximate polygon
-        peri = cv2.arcLength(c, True)
-        approx = cv2.approxPolyDP(c, 0.04 * peri, True)
-        area = cv2.contourArea(c)
+    # Horizontal bounds: Take a central slice of the segment's width.
+    # This factor determines how wide the ROI is as a percentage of the segment's width.
+    roi_width_factor = 0.5  # Example: 50% of the segment width
+    x_center = width // 2
+    roi_width = int(width * roi_width_factor)
+    x_left = max(0, x_center - roi_width // 2)
+    x_right = min(width, x_center + roi_width // 2)
 
-        # Filter contours based on shape (number of vertices for a circle-like shape)
-        # and size (area constraints).
-        if len(approx) > 5 and area > min_circle_area and area < max_circle_area:
-            # Get the minimum enclosing circle for the contour (for initial radius estimation)
-            (x_enc, y_enc), radius = cv2.minEnclosingCircle(c)
+    # Vertical bounds: Divide the segment height into 4 sections for 4 options.
+    # `vertical_padding_factor` shrinks the ROI to focus on the bubble,
+    # avoiding surrounding text or lines.
+    option_section_height = height // 4
+    vertical_padding_factor = 0.1  # 10% padding from top/bottom of each option's section
 
-            # Calculate centroid of the contour for potentially more accurate centering
-            M = cv2.moments(c)
-            if M["m00"] != 0:
-                cX = int(M["m10"] / M["m00"])
-                cY = int(M["m01"] / M["m00"])
-                center = (cX, cY) # Use centroid as center
-            else: # Fallback to minEnclosingCircle center if moment is zero (e.g., tiny contour)
-                center = (int(x_enc), int(y_enc))
+    rois = []  # List to store (left, upper, right, lower) tuples for each ROI
+    for i in range(4):  # For options 1 through 4
+        y_upper = i * option_section_height + int(option_section_height * vertical_padding_factor)
+        y_lower = (i + 1) * option_section_height - int(option_section_height * vertical_padding_factor)
+        # Ensure coordinates are within image bounds
+        y_upper = max(0, y_upper)
+        y_lower = min(height, y_lower)
+        rois.append((x_left, y_upper, x_right, y_lower))
 
-            radius = int(radius) # Keep radius from minEnclosingCircle for consistency
-
-            # Calculate circularity to ensure it's round
-            if peri > 0:
-                circularity = (4 * np.pi * area) / (peri ** 2)
-            else:
-                circularity = 0
-
-            # Filter by circularity
-            if circularity > min_circularity:
-                # Create a mask for the inner region of the detected circle
-                mask = np.zeros(gray.shape, dtype=np.uint8)
-                # Draw a slightly smaller filled circle on the mask to avoid border noise
-                cv2.circle(mask, center, radius - 2, (255), -1)
-
-                # Calculate the mean intensity of the original grayscale image within this mask.
-                # A lower mean intensity means the area is darker (filled mark).
-                mean_intensity = cv2.mean(gray, mask=mask)[0]
-
-                is_filled = False
-                # If the mean intensity is below the threshold, consider it filled.
-                if mean_intensity < fill_intensity_threshold:
-                    is_filled = True
-
-                potential_options.append({
-                    'center': center,
-                    'radius': radius,
-                    'is_filled': is_filled,
-                    'mean_intensity': mean_intensity # Useful for debugging/tuning
-                })
-
-    # Sort the potential options by their y-coordinate to assign numbers vertically (1, 2, 3, ...)
-    potential_options.sort(key=lambda opt: opt['center'][1])
-
+    avg_pixel_values = []
     all_option_details = []
-    selected_option_numbers = []
 
-    # Assign option numbers and collect selected ones
-    for option_num, opt in enumerate(potential_options, 1):
-        option_detail = {
+    for i, roi in enumerate(rois):
+        option_num = i + 1  # 1-indexed option number
+
+        # Calculate approximate center and radius for drawing purposes
+        # These are relative to the current segment (col_img)
+        approx_center = ((roi[0] + roi[2]) // 2, (roi[1] + roi[3]) // 2)
+        approx_radius = int(min((roi[2] - roi[0]), (roi[3] - roi[1])) / 2)
+
+        current_option_detail = {
             'option_num': option_num,
-            'center': opt['center'],
-            'radius': opt['radius'],
-            'is_filled': opt['is_filled']
+            'center': approx_center,
+            'radius': approx_radius,
+            'is_filled': False,  # Will be determined later
+            'mean_intensity': float('inf')
         }
-        all_option_details.append(option_detail)
-        if opt['is_filled']:
-            selected_option_numbers.append(option_num)
+        # Append this detail now, will update 'mean_intensity' and 'is_filled' later
+        all_option_details.append(current_option_detail)
 
-    return selected_option_numbers, all_option_details
+        # Check for invalid ROI dimensions BEFORE attempting to crop
+        if roi[2] <= roi[0] or roi[3] <= roi[1]:
+            if debug_mode:
+                print(
+                    f"Debug ({column_key}): Warning: ROI for option {option_num} has invalid dimensions: {roi}. Skipping.")
+            avg_pixel_values.append(float('inf'))
+            continue  # Skip to next iteration
+
+        try:
+            cropped_img_pil = img_pil.crop(roi)
+            # Now check the size of the *actual cropped image*
+            if cropped_img_pil.size[0] == 0 or cropped_img_pil.size[1] == 0:
+                if debug_mode:
+                    print(
+                        f"Debug ({column_key}): Warning: Cropped image for option {option_num} is empty (0 size). Skipping.")
+                avg_pixel_values.append(float('inf'))
+                continue  # Skip to next iteration
+
+            pixel_data = list(cropped_img_pil.getdata())
+
+            if not pixel_data:  # Handle case where cropped image might somehow be empty after getdata()
+                avg_pixel = float('inf')
+            else:
+                avg_pixel = sum(pixel_data) / len(pixel_data)
+
+        except Exception as e:
+            if debug_mode:
+                print(
+                    f"Debug ({column_key}): Error during cropping or pixel data extraction for option {option_num} (ROI: {roi}): {e}. Marking as invalid.")
+            avg_pixel = float('inf')  # Mark as invalid if any error during crop
+
+        avg_pixel_values.append(avg_pixel)
+        # Update mean intensity for the detail that was already appended
+        all_option_details[i]['mean_intensity'] = avg_pixel
+
+        if debug_mode:
+            # Draw the ROI rectangle on the debug image
+            cv2.rectangle(img_to_draw, (roi[0], roi[1]), (roi[2], roi[3]), (0, 255, 255), 1)  # Yellow rectangle
+            # Put text for average pixel value
+            cv2.putText(img_to_draw, f"{avg_pixel:.0f}", (roi[0], roi[1] - 5),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 0), 1, cv2.LINE_AA)  # Black text
+
+    if debug_mode:
+        print(f"Debug ({column_key}): Raw average pixel values for options: {avg_pixel_values}")
+        # Display the column with ROIs drawn
+        window_name = f"Debug: {column_key} with ROIs"
+        cv2.imshow(window_name, img_to_draw)
+        cv2.waitKey(0)  # Wait for a key press to close and proceed
+
+        # Check if the window exists before trying to destroy it
+        # This is a bit of a workaround; in some OpenCV versions/OS,
+        # cv2.getWindowProperty might return -1 if the window was just closed manually.
+        if cv2.getWindowProperty(window_name, cv2.WND_PROP_VISIBLE) >= 0:
+            cv2.destroyWindow(window_name)
+
+    if not avg_pixel_values or all(val == float('inf') for val in avg_pixel_values):
+        if debug_mode:
+            print(f"Debug ({column_key}): No valid ROIs found or all ROIs are empty/invalid in this segment.")
+        return [], []
+
+    # Find the option with the minimum average pixel value (darkest region).
+    min_avg_value = float('inf')
+    selected_option_index = -1
+
+    # Ensure to only consider valid (non-inf) pixel values for selection
+    valid_avg_pixel_values = [val for val in avg_pixel_values if val != float('inf')]
+
+    if not valid_avg_pixel_values:
+        if debug_mode:
+            print(f"Debug ({column_key}): No valid options to select from after filtering infinities.")
+        return [], []  # No valid options to select from
+
+    min_avg_value = min(valid_avg_pixel_values)
+    # Find the index of this minimum value in the original avg_pixel_values list
+    for i, val in enumerate(avg_pixel_values):
+        if val == min_avg_value:
+            selected_option_index = i
+            break
+
+    # If no distinct option found (e.g., all were infinity or no unique min), return empty
+    if selected_option_index == -1:
+        if debug_mode:
+            print(f"Debug ({column_key}): Could not determine a distinct minimum average pixel value.")
+        return [], []
+
+    # --- Heuristic for determining distinct selection ---
+    sorted_values = sorted(valid_avg_pixel_values)
+
+    selected_numbers = []
+
+    # Threshold 1: The darkest option's average value should be significantly
+    # lower than the second darkest option.
+    threshold_difference_ratio = 0.35  # Selected option must be 35% darker than the next one
+
+    # Threshold 2: Fallback - if the ratio isn't met, check if there's a large
+    # absolute difference between the darkest and the brightest option.
+    min_max_diff_threshold = 40  # An absolute difference of 40 in grayscale values (out of 255)
+
+    is_distinctly_selected = False
+
+    if len(sorted_values) >= 2 and min_avg_value == sorted_values[0]:  # Ensure min_avg_value is indeed the darkest
+        if sorted_values[1] > 0:  # Avoid division by zero
+            if (sorted_values[1] - min_avg_value) / sorted_values[1] > threshold_difference_ratio:
+                is_distinctly_selected = True
+        else:  # If sorted_values[1] is 0, then min_avg_value must also be 0 for it to be the darkest
+            if min_avg_value == 0:
+                is_distinctly_selected = True
+
+    # If not distinctly selected by ratio, try the absolute difference fallback
+    # Also handles cases where there might be fewer than 4 valid options, as long as there's more than one.
+    if not is_distinctly_selected and len(sorted_values) > 1:
+        max_avg_value_overall = sorted_values[-1]  # The largest (lightest) valid average
+        if (max_avg_value_overall - min_avg_value) > min_max_diff_threshold:
+            is_distinctly_selected = True
+
+    # If there's only one valid option in the segment, and it's the darkest (by definition),
+    # assume it's selected. This handles cases where a column might only contain one bubble due to cropping.
+    if len(valid_avg_pixel_values) == 1:
+        is_distinctly_selected = True
+
+    if is_distinctly_selected:
+        selected_numbers.append(selected_option_index + 1)
+        # Update the is_filled status in all_option_details for the selected option
+        for detail in all_option_details:
+            if detail['option_num'] == (selected_option_index + 1):
+                detail['is_filled'] = True
+                if debug_mode:
+                    print(
+                        f"Debug ({column_key}): Option {detail['option_num']} marked as FILLED (Mean Intensity: {detail['mean_intensity']:.2f})")
+                break
+    else:
+        if debug_mode:
+            print(f"Debug ({column_key}): No distinct option detected as filled based on heuristics.")
+
+    return selected_numbers, all_option_details
+
 
 # --- Section 3: Main Execution ---
 
 if __name__ == "__main__":
     # Specify the path to your OMR image
-    original_omr_image_path = "omr4.png" # Make sure this image exists in the same directory
+    original_omr_image_path = "omr4.png"  # Changed to original image for fresh processing
 
     print("--- Starting OMR Sheet Processing ---")
 
@@ -342,7 +468,7 @@ if __name__ == "__main__":
         'Bottom_Col_5': [1],
         'Bottom_Col_6': [1],
         'Bottom_Col_7': [1],
-        'Bottom_Col_8': [1], # This is the target for debugging
+        'Bottom_Col_8': [1],  # This is the target for debugging
         'Bottom_Col_9': [2],
         'Bottom_Col_10': [2],
         'Bottom_Col_11': [2],
@@ -371,32 +497,33 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"❌ Error loading image for drawing: {e}")
 
-
     if answer_section_img is not None and answer_section_img.size > 0 and omr_image_for_drawing is not None:
         print("\n--- Splitting Answer Section into Halves and then Columns ---")
-        answer_top_half_cols, answer_bottom_half_cols = split_answer_section_horizontally(answer_section_img, num_columns=15)
+        answer_top_half_cols, answer_bottom_half_cols = split_answer_section_horizontally(answer_section_img,
+                                                                                          num_columns=15)
 
         # Calculate absolute offsets for the answer section
         answer_section_abs_x = omr_bbox[0]
         answer_section_abs_y = omr_bbox[1]
         answer_section_width = int(0.75 * omr_bbox[2])
         answer_section_height = omr_bbox[3]
-        num_columns = 15 # Consistent with split_answer_section_horizontally
+        num_columns = 15  # Consistent with split_answer_section_horizontally
         col_width_actual = answer_section_width / num_columns
 
         # Define reduced circle size for drawing
-        drawing_radius_scale = 0.6 # Kept at 0.6
-        drawing_thickness = 3 # Line thickness for circles
+        drawing_radius_scale = 0.6
+        drawing_thickness = 3  # Line thickness for circles
 
         # Process top half columns
         for i, col_img in enumerate(answer_top_half_cols):
-            selected_numbers, all_options_in_column = detect_filled_circles_in_segment(col_img)
-            column_key = f"Top_Col_{i+1}"
+            column_key = f"Top_Col_{i + 1}"
+            selected_numbers, all_options_in_column = detect_filled_circles_in_segment(col_img, debug_mode=True,
+                                                                                       column_key=column_key)  # DEBUG MODE ON
             all_selected_options_by_column[column_key] = selected_numbers
             print(f"  {column_key}: Student selected = {selected_numbers}")
 
             col_abs_x_offset = answer_section_abs_x + int(i * col_width_actual)
-            col_abs_y_offset = answer_section_abs_y # Top half starts at omr_y
+            col_abs_y_offset = answer_section_abs_y  # Top half starts at omr_y
 
             # Drawing logic for highlighting
             if column_key in correct_answers:
@@ -408,21 +535,23 @@ if __name__ == "__main__":
                 for option_detail in all_options_in_column:
                     option_num = option_detail['option_num']
                     center_rel = option_detail['center']
-                    radius = int(option_detail['radius'] * drawing_radius_scale) # Apply scale to radius
-                    is_filled = option_detail['is_filled']
+                    radius = int(option_detail['radius'] * drawing_radius_scale)  # Apply scale to radius
+                    is_filled = option_detail['is_filled']  # Use the is_filled status from new logic
 
                     center_abs = (center_rel[0] + col_abs_x_offset, center_rel[1] + col_abs_y_offset)
 
                     if option_num in correct_ans_for_col:
                         if is_filled:
                             # Student correctly marked this option
-                            cv2.circle(omr_image_for_drawing, center_abs, radius, (0, 255, 0), drawing_thickness) # Green: Correctly selected correct answer
-                        elif is_question_incorrect_overall: # Only highlight correct answer in blue if student got it wrong
+                            cv2.circle(omr_image_for_drawing, center_abs, radius, (0, 255, 0),
+                                       drawing_thickness)  # Green: Correctly selected correct answer
+                        elif is_question_incorrect_overall:  # Only highlight correct answer in blue if student got it wrong
                             # Student missed this correct option, and the question overall is wrong - highlight correct in BLUE
-                            cv2.circle(omr_image_for_drawing, center_abs, radius, (255, 0, 0), drawing_thickness) # Blue: Missed correct answer
-                    elif is_filled: # Student marked an option that is not correct - highlight in RED
-                        cv2.circle(omr_image_for_drawing, center_abs, radius, (0, 0, 255), drawing_thickness) # Red: Incorrectly selected option
-
+                            cv2.circle(omr_image_for_drawing, center_abs, radius, (255, 0, 0),
+                                       drawing_thickness)  # Blue: Missed correct answer
+                    elif is_filled:  # Student marked an option that is not correct - highlight in RED
+                        cv2.circle(omr_image_for_drawing, center_abs, radius, (0, 0, 255),
+                                   drawing_thickness)  # Red: Incorrectly selected option
 
                 if selected_numbers == correct_ans_for_col:
                     total_marks_gained += 1
@@ -434,52 +563,17 @@ if __name__ == "__main__":
 
         # Process bottom half columns
         for i, col_img in enumerate(answer_bottom_half_cols):
-            selected_numbers, all_options_in_column = detect_filled_circles_in_segment(col_img)
-            column_key = f"Bottom_Col_{i+1}"
+            column_key = f"Bottom_Col_{i + 1}"
+            selected_numbers, all_options_in_column = detect_filled_circles_in_segment(col_img, debug_mode=True,
+                                                                                       column_key=column_key)  # DEBUG MODE ON
             all_selected_options_by_column[column_key] = selected_numbers
             print(f"  {column_key}: Student selected = {selected_numbers}")
 
-            # --- Debugging specific column for visual inspection (UNCOMMENT TO USE) ---
-            if column_key == 'Bottom_Col_8': # Adjust this to the column you want to debug
-                print(f"--- Debugging {column_key} ---")
-                # Show the raw image segment for this column
-                cv2.imshow(f"Debug: {column_key} Raw Segment", col_img)
-                # Convert to grayscale and threshold to see what contours are being found
-                gray_debug = cv2.cvtColor(col_img, cv2.COLOR_BGR2GRAY)
-                # Note: Using the same adaptive thresholding parameters as the function
-                # FIX: Explicitly pass blockSize and C as keyword arguments to avoid `cv2.error`
-                # FIX: Added thresholdType (cv2.THRESH_BINARY_INV) which was missing
-                thresh_debug = cv2.adaptiveThreshold(gray_debug, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, blockSize=11, C=2)
-                cv2.imshow(f"Debug: {column_key} Thresholded", thresh_debug)
-
-                # Draw detected contours on a copy of the segment for visual verification
-                debug_contours_img = col_img.copy()
-                debug_contours, _ = cv2.findContours(thresh_debug, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-                cv2.drawContours(debug_contours_img, debug_contours, -1, (0, 255, 255), 1) # Draw all contours in yellow
-                cv2.imshow(f"Debug: {column_key} All Contours", debug_contours_img)
-
-                # Draw detected circles (after filtering by area, circularity)
-                debug_img_with_circles = col_img.copy()
-                if all_options_in_column:
-                    for option_detail in all_options_in_column:
-                        center_rel = option_detail['center']
-                        radius = int(option_detail['radius'] * drawing_radius_scale)
-                        color = (0, 255, 0) # Green for detected circles
-                        if option_detail['is_filled']:
-                            color = (0, 165, 255) # Orange for detected FILLED circles
-                        cv2.circle(debug_img_with_circles, center_rel, radius, color, 2)
-                else:
-                    print(f"No potential circles found in {column_key} based on current parameters.")
-                cv2.imshow(f"Debug: {column_key} Detected Circles (Filtered)", debug_img_with_circles)
-
-                cv2.waitKey(0) # Wait for a key press to close these debug windows
-                cv2.destroyAllWindows()
-            # ----------------------------------------------------
-
             col_abs_x_offset = answer_section_abs_x + int(i * col_width_actual)
-            col_abs_y_offset = answer_section_abs_y + (answer_section_height // 2) # Bottom half offset
+            col_abs_y_offset = answer_section_abs_y + (answer_section_height // 2)  # Bottom half offset
 
             # Drawing logic for highlighting
+
             if column_key in correct_answers:
                 correct_ans_for_col = correct_answers[column_key]
 
@@ -489,21 +583,23 @@ if __name__ == "__main__":
                 for option_detail in all_options_in_column:
                     option_num = option_detail['option_num']
                     center_rel = option_detail['center']
-                    radius = int(option_detail['radius'] * drawing_radius_scale) # Apply scale to radius
-                    is_filled = option_detail['is_filled']
+                    radius = int(option_detail['radius'] * drawing_radius_scale)  # Apply scale to radius
+                    is_filled = option_detail['is_filled']  # Use the is_filled status from new logic
 
                     center_abs = (center_rel[0] + col_abs_x_offset, center_rel[1] + col_abs_y_offset)
 
                     if option_num in correct_ans_for_col:
                         if is_filled:
                             # Student correctly marked this option
-                            cv2.circle(omr_image_for_drawing, center_abs, radius, (0, 255, 0), drawing_thickness) # Green: Correctly selected correct answer
-                        elif is_question_incorrect_overall: # Only highlight correct answer in blue if student got it wrong
+                            cv2.circle(omr_image_for_drawing, center_abs, radius, (0, 255, 0),
+                                       drawing_thickness)  # Green: Correctly selected correct answer
+                        elif is_question_incorrect_overall:  # Only highlight correct answer in blue if student got it wrong
                             # Student missed this correct option, and the question overall is wrong - highlight correct in BLUE
-                            cv2.circle(omr_image_for_drawing, center_abs, radius, (255, 0, 0), drawing_thickness) # Blue: Missed correct answer
-                    elif is_filled: # Student marked an option that is not correct - highlight in RED
-                        cv2.circle(omr_image_for_drawing, center_abs, radius, (0, 0, 255), drawing_thickness) # Red: Incorrectly selected option
-
+                            cv2.circle(omr_image_for_drawing, center_abs, radius, (255, 0, 0),
+                                       drawing_thickness)  # Blue: Missed correct answer
+                    elif is_filled:  # Student marked an option that is not correct - highlight in RED
+                        cv2.circle(omr_image_for_drawing, center_abs, radius, (0, 0, 255),
+                                   drawing_thickness)  # Red: Incorrectly selected option
 
                 if selected_numbers == correct_ans_for_col:
                     total_marks_gained += 1
@@ -519,14 +615,15 @@ if __name__ == "__main__":
     # --- Process the info section and write total marks ---
     if info_section_img is not None and info_section_img.size > 0 and omr_image_for_drawing is not None:
         print("\n--- Extracting Info Sub-sections and Writing Total Marks ---")
-        student_id_img, subject_code_img, total_marks_img, total_marks_rel_bbox_y = extract_info_sections(info_section_img)
+        student_id_img, subject_code_img, total_marks_img, total_marks_rel_bbox_y = extract_info_sections(
+            info_section_img)
 
         try:
             # Define font parameters for OpenCV (cv2.putText)
             font = cv2.FONT_HERSHEY_SIMPLEX
-            font_scale = 1.5 # Adjust font scale as needed
-            font_thickness = 4 # Adjust thickness for visibility
-            font_color = (0, 0, 0) # Black color (BGR)
+            font_scale = 1.5  # Adjust font scale as needed
+            font_thickness = 4  # Adjust thickness for visibility
+            font_color = (0, 0, 0)  # Black color (BGR)
 
             if omr_bbox:
                 omr_x, omr_y, omr_w, omr_h = omr_bbox
@@ -540,7 +637,6 @@ if __name__ == "__main__":
 
                 # Calculate the center point for placing the text
                 text_center_x = info_section_abs_x_start + (info_section_img.shape[1] // 2)
-                # FIX: Corrected typo 'total_marks_abs_y_y_start' to 'total_marks_abs_y_start'
                 text_center_y = total_marks_abs_y_start + ((total_marks_abs_y_end - total_marks_abs_y_start) // 2)
 
                 # Get text size to properly center it
@@ -549,8 +645,7 @@ if __name__ == "__main__":
 
                 # Calculate origin to truly center the text within the bounding box
                 text_origin_x = int(text_center_x - text_size[0] / 2)
-                text_origin_y = int(text_center_y + text_size[1] / 2) # Adjust for baseline
-
+                text_origin_y = int(text_center_y + text_size[1] / 2)  # Adjust for baseline
 
                 # Draw the total marks onto the original image
                 cv2.putText(omr_image_for_drawing, text_string, (text_origin_x, text_origin_y),
@@ -558,15 +653,15 @@ if __name__ == "__main__":
                 print(f"✅ Total marks '{total_marks_gained}' written onto the 'মোট নম্বর' section.")
 
             # Save the modified image
-            output_image_path = "omr4_with_marks-old.png"
+            output_image_path = "omr4_with_marks.png"
             cv2.imwrite(output_image_path, omr_image_for_drawing)
             print(f"✅ Final OMR image with marks saved to {output_image_path}")
 
             # --- Display the image in a popup window ---
             cv2.imshow("OMR Sheet with Total Marks", omr_image_for_drawing)
             print("\n💡 Displaying OMR image with marks in a popup. Close the window to continue.")
-            cv2.waitKey(0) # Wait indefinitely until a key is pressed (window closed)
-            cv2.destroyAllWindows() # Close all OpenCV windows
+            cv2.waitKey(0)  # Wait indefinitely until a key is pressed (window closed)
+            cv2.destroyAllWindows()  # Close all OpenCV windows
 
         except Exception as e:
             print(f"❌ An error occurred while drawing marks on the image or displaying it: {e}")

@@ -304,8 +304,8 @@ if __name__ == "__main__":
     # IMPORTANT: REPLACE THESE WITH YOUR ACTUAL CORRECT ANSWERS.
     correct_answers = {
         'Top_Col_1': [1],
-        'Top_Col_2': [1],
-        'Top_Col_3': [1],
+        'Top_Col_2': [2],
+        'Top_Col_3': [3],
         'Top_Col_4': [4],
         'Top_Col_5': [3],
         'Top_Col_6': [2],
@@ -496,7 +496,7 @@ if __name__ == "__main__":
                 print(f"✅ Total marks '{total_marks_gained}' written onto the 'মোট নম্বর' section.")
 
             # Save the modified image
-            output_image_path = "omr4_with_marks.png"
+            output_image_path = "omr4_with_marks-old.png"
             cv2.imwrite(output_image_path, omr_image_for_drawing)
             print(f"✅ Final OMR image with marks saved to {output_image_path}")
 
