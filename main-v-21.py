@@ -2,8 +2,7 @@ import cv2
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 import os
-from collections import Counter
-import math # For calculating distances for outside ring
+from collections import Counter  # For frequency analysis
 
 
 def detect_filled_circles(image_path, crop_top_percentage=0.18):
@@ -38,11 +37,9 @@ def detect_filled_circles(image_path, crop_top_percentage=0.18):
 
         # Convert to grayscale for detection
         gray = cv2.cvtColor(img_cv_processed_base, cv2.COLOR_BGR2GRAY)
-        blurred = cv2.GaussianBlur(gray, (5, 5), 0) # Apply Gaussian blur to reduce noise
 
         # Apply adaptive thresholding.
-        # Block size 11, C value 2 is often good.
-        thresh = cv2.adaptiveThreshold(blurred, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+        thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
                                        cv2.THRESH_BINARY_INV, 11, 2)
 
         # Find contours in the thresholded image.
@@ -55,83 +52,48 @@ def detect_filled_circles(image_path, crop_top_percentage=0.18):
 
         # Define font for drawing text
         try:
+            # Using a system-wide font name or a path if needed
             font = ImageFont.truetype("arial.ttf", 20)
         except IOError:
             print("Could not load 'arial.ttf', using default PIL font. (Adjust font path if needed)")
             font = ImageFont.load_default()
 
-        # Tunable parameters for circle detection
-        min_contour_area = 100    # Minimum area of a contour to be considered
-        max_contour_area = 2500   # Maximum area
-        min_radius_px = 10        # Minimum radius in pixels
-        max_radius_px = 30        # Maximum radius in pixels
-        min_circularity = 0.6     # How close to a perfect circle (1.0 is perfect)
-        fill_threshold_intensity_diff = 40 # Minimum intensity difference to consider filled
+        min_circle_area = 200  # Adjust this based on your image and circle size
+        max_circle_area = 2000  # Adjust this based on your image and circle size
+        min_circularity = 0.5  # A value close to 1 indicates a perfect circle
 
         potential_options = []
 
         # Loop over the found contours
         for i, c in enumerate(contours):
             peri = cv2.arcLength(c, True)
+            approx = cv2.approxPolyDP(c, 0.04 * peri, True)
             area = cv2.contourArea(c)
 
-            # Filter by area first
-            if not (min_contour_area < area < max_contour_area):
-                # print(f"  Contour {i}: Area {area} out of range ({min_contour_area}-{max_contour_area})")
-                continue
+            if len(approx) > 5 and area > min_circle_area and area < max_circle_area:
+                (x, y), radius = cv2.minEnclosingCircle(c)
+                center = (int(x), int(y))  # These are already in the cropped image's coordinates
+                radius = int(radius)
 
-            # Approximate the contour to a polygon and check for circularity
-            approx = cv2.approxPolyDP(c, 0.04 * peri, True)
-            if len(approx) < 5: # A circle should have many vertices when approximated
-                # print(f"  Contour {i}: Not enough vertices ({len(approx)})")
-                continue
+                if peri > 0:
+                    circularity = (4 * np.pi * area) / (peri ** 2)
+                else:
+                    circularity = 0
 
-            (x, y), radius = cv2.minEnclosingCircle(c)
-            center = (int(x), int(y))
-            radius = int(radius)
+                if circularity > min_circularity:
+                    mask = np.zeros(gray.shape, dtype=np.uint8)
+                    cv2.circle(mask, center, radius - 2, (255), -1)
 
-            # Filter by radius
-            if not (min_radius_px < radius < max_radius_px):
-                # print(f"  Contour {i}: Radius {radius} out of range ({min_radius_px}-{max_radius_px})")
-                continue
+                    mean_intensity = cv2.mean(gray, mask=mask)[0]
+                    is_filled = mean_intensity < 150  # Example threshold: adjust as needed
 
-            if peri > 0:
-                circularity = (4 * np.pi * area) / (peri ** 2)
-            else:
-                circularity = 0
+                    potential_options.append({
+                        'center': center,  # Store coordinates relative to the cropped image
+                        'radius': radius,
+                        'is_filled': is_filled,
+                        'mean_intensity': mean_intensity  # For debugging/tuning
+                    })
 
-            if circularity < min_circularity:
-                # print(f"  Contour {i}: Circularity {circularity:.2f} too low (min {min_circularity})")
-                continue
-
-            # --- Now, check if the circle is filled based on intensity ---
-            mask_inner = np.zeros(gray.shape, dtype=np.uint8)
-            cv2.circle(mask_inner, center, radius - 2, 255, -1) # Inner part of the circle
-
-            # Create an outer ring mask to compare intensities
-            mask_outer_ring = np.zeros(gray.shape, dtype=np.uint8)
-            # Draw a larger circle then subtract the inner one to get a ring
-            cv2.circle(mask_outer_ring, center, radius + 5, 255, -1) # Slightly larger circle
-            cv2.circle(mask_outer_ring, center, radius + 1, 0, -1) # Subtract slightly larger than actual circle
-
-            mean_intensity_inner = cv2.mean(gray, mask=mask_inner)[0]
-            mean_intensity_outer = cv2.mean(gray, mask=mask_outer_ring)[0]
-
-            # A filled circle should have a significantly lower mean intensity inside than outside
-            is_filled = (mean_intensity_outer - mean_intensity_inner) > fill_threshold_intensity_diff
-
-            # print(f"  Contour {i} (x={x:.0f},y={y:.0f},r={radius}): Area={area:.0f}, Circ={circularity:.2f}, Inner={mean_intensity_inner:.1f}, Outer={mean_intensity_outer:.1f}, Diff={mean_intensity_outer - mean_intensity_inner:.1f}, Filled={is_filled}")
-
-            potential_options.append({
-                'center': center,
-                'radius': radius,
-                'is_filled': is_filled,
-                'mean_intensity_inner': mean_intensity_inner,
-                'mean_intensity_outer': mean_intensity_outer
-            })
-
-        # Sort potential options by their vertical position (y-coordinate)
-        # This assumes options are stacked vertically (e.g., A, B, C, D)
         potential_options.sort(key=lambda opt: opt['center'][1])
 
         selected_option_numbers_from_this_image = []
@@ -155,14 +117,14 @@ def detect_filled_circles(image_path, crop_top_percentage=0.18):
 
         # Determine the single selected answer for this question
         if len(selected_option_numbers_from_this_image) == 1:
-            print(f"  -> Detected single selection: Option {selected_option_numbers_from_this_image[0]}")
             return img_pil, selected_option_numbers_from_this_image[0]
         elif len(selected_option_numbers_from_this_image) > 1:
+            # More than one option selected for a single question -> consider it incorrect/ambiguous
             print(
                 f"  Warning for {os.path.basename(image_path)}: Multiple options selected ({selected_option_numbers_from_this_image}). Counted as 0 marks.")
             return img_pil, 0
         else:
-            print(f"  -> No option detected as selected for {os.path.basename(image_path)}.")
+            # No option selected
             return img_pil, 0
 
     except Exception as e:
@@ -176,7 +138,6 @@ if __name__ == '__main__':
     os.makedirs(output_processed_dir, exist_ok=True)
 
     # --- Define the correct answers here ---
-    # Ensure this matches the question order (e.g., question_1.png corresponds to corrected_answers[0])
     corrected_answers = [1, 2, 3, 4, 3, 2, 2, 3, 3, 4, 3, 2, 2, 2, 2, 1, 2, 3, 3, 1, 1, 1, 1, 2, 2, 2, 1, 2, 3, 4]
 
     student_answers = []  # To store the detected answers for each question in order
@@ -191,7 +152,7 @@ if __name__ == '__main__':
     image_files_to_process = sorted([f for f in os.listdir(answer_columns_dir)
                                      if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))],
                                     key=lambda x: int(x.split('_')[1].split('.')[
-                                                          0]) if '_' in x and x.split('_')[1].split('.')[0].isdigit() else float('inf')) # Handles 'question_X.png' format, robust to non-numeric parts
+                                                          0]) if '_' in x else 0)  # Handles 'question_X.png' format
 
     print(f"Total image files to process: {len(image_files_to_process)}")
     print(f"Total correct answers defined: {len(corrected_answers)}")
@@ -206,6 +167,7 @@ if __name__ == '__main__':
 
         print(f"\n--- Processing: {filename} (Output will be cropped by {CROP_PERCENTAGE * 100:.0f}%) ---")
 
+        # Call the detection function. It now returns a single answer (or 0).
         processed_image, selected_answer_for_question = detect_filled_circles(image_path,
                                                                               crop_top_percentage=CROP_PERCENTAGE)
 
@@ -213,7 +175,7 @@ if __name__ == '__main__':
             output_path = os.path.join(output_processed_dir, f"processed_cropped_output_{filename}")
             processed_image.save(output_path)
             print(f"Processed image saved to {output_path}")
-            # print(f"Selected option for {filename}: {selected_answer_for_question}") # Already printed inside the function
+            print(f"Selected option for {filename}: {selected_answer_for_question}")
             student_answers.append(selected_answer_for_question)
         else:
             print(f"Skipping {filename} due to an error during processing. Assigning 0 for this question.")

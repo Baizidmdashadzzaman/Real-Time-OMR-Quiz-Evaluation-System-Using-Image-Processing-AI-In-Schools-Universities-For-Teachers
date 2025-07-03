@@ -155,7 +155,7 @@ def split_answer_section_horizontally(answer_section_image):
 
 # === Main execution block ===
 if __name__ == "__main__":
-    original_omr_image_path = "omr4.png"  # Your original OMR image file (or "omr4.png")
+    original_omr_image_path = "omr5.png"  # Your original OMR image file (or "omr4.png")
 
     print("--- Starting OMR Sheet Processing ---")
 

@@ -150,7 +150,7 @@ if __name__ == '__main__':
     # You will need to replace 'omr_single.png' with the actual path to your OMR image
     # For testing, save the image provided in the prompt as 'omr_single.png' in the
     # same directory as this script.
-    image_path = 'answer_columns/question_2.png' # Replace with your image file name
+    image_path = 'answer_columns/question_23.png' # Replace with your image file name
 
     processed_image, selected_numbers = detect_filled_circles(image_path)
 
