@@ -417,7 +417,7 @@ def find_and_draw_bubble_circle(image, bbox, color, thickness=3):
 
 # === Main execution block ===
 if __name__ == "__main__":
-    original_omr_image_path = "omr5.png"  # Your original OMR image file
+    original_omr_image_path = "omr4.png"  # Your original OMR image file
 
     print("--- Starting OMR Sheet Processing ---")
 
