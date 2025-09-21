@@ -414,10 +414,27 @@ def find_and_draw_bubble_circle(image, bbox, color, thickness=3):
             return True
     return False
 
+def save_output_image(image, output_path="omr_result.jpg"):
+    """
+    Saves the processed OMR image (with highlights and marks displayed).
+    """
+    if image is None or image.size == 0:
+        print("❌ Error: No image to save.")
+        return False
+
+    try:
+        cv2.imwrite(output_path, image)
+        print(f"✅ Output image saved at: {os.path.abspath(output_path)}")
+        return True
+    except Exception as e:
+        print(f"❌ Error while saving image: {e}")
+        return False
+
+
 
 # === Main execution block ===
 if __name__ == "__main__":
-    original_omr_image_path = "omr5.png"  # Your original OMR image file
+    original_omr_image_path = "q-paper_page-0001.jpg"  # Your original OMR image file
 
     print("--- Starting OMR Sheet Processing ---")
 
@@ -492,7 +509,7 @@ if __name__ == "__main__":
 
         # --- TEACHER'S CORRECT ANSWERS ---
         correct_answers = [
-            1, 2, 3, 4, 3, 2, 2, 3, 3, 4,
+            2, 2, 3, 4, 3, 2, 2, 3, 3, 4,
             3, 2, 2, 2, 2, 1, 2, 3, 3, 1,
             1, 1, 1, 2, 2, 2, 1, 2, 3, 4
         ]
@@ -582,6 +599,8 @@ if __name__ == "__main__":
 
             cv2.putText(original_image_for_display, text_to_display, (text_x, text_y),
                         font, font_scale, font_color, font_thickness, cv2.LINE_AA)
+
+            save_output_image(original_image_for_display, "omr_result_v2.jpg")
 
             print(f"\n✅ Displaying total marks ({total_marks_calculated}) on {original_omr_image_path} and highlights.")
             cv2.imshow("OMR with Highlights and Total Marks", original_image_for_display)
