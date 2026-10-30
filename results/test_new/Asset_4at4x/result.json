@@ -1,0 +1,671 @@
+{
+  "image": "samples\\test-new\\Asset 4@4x.png",
+  "template_id": "q-paper",
+  "warp": {
+    "mode": "frame_quad",
+    "page_confidence": 0.99,
+    "corners": [
+      [
+        1623.0,
+        473.0
+      ],
+      [
+        3056.0,
+        1800.0
+      ],
+      [
+        2444.0,
+        2464.0
+      ],
+      [
+        1014.0,
+        1139.0
+      ]
+    ],
+    "debug": {
+      "frame_orientation": 0,
+      "panel_distance": 0.406,
+      "source_size": [
+        3499,
+        3539
+      ],
+      "warped_size": [
+        1433,
+        2024
+      ]
+    }
+  },
+  "calibration": {
+    "method": "gmm",
+    "threshold": 0.12352941185235977,
+    "separation": 39.49536423246209,
+    "mu_empty": 0.045785899688746384,
+    "mu_marked": 0.655388132786697,
+    "sigma_empty": 0.012799408859454249,
+    "sigma_marked": 0.017681627789880434,
+    "marked_count": 30,
+    "high_component": 0
+  },
+  "diagnostics": {
+    "mean_ink": 13.643534660339355,
+    "glare_fraction": 0.0,
+    "ring_baseline": 0.24705882370471954,
+    "score_min": 0.028907922912205567,
+    "score_max": 0.6722536492551494
+  },
+  "answers": {
+    "1": {
+      "selected": [
+        0
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "2": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "3": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "4": {
+      "selected": [
+        3
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "5": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "6": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "7": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "8": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "9": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "10": {
+      "selected": [
+        3
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "11": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "12": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "13": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "14": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "15": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "16": {
+      "selected": [
+        0
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "17": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "18": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "19": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "20": {
+      "selected": [
+        0
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "21": {
+      "selected": [
+        0
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "22": {
+      "selected": [
+        0
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "23": {
+      "selected": [
+        0
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "24": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "25": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "26": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "27": {
+      "selected": [
+        0
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "28": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "29": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "30": {
+      "selected": [
+        3
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    }
+  },
+  "grade": {
+    "total": 29.0,
+    "maximum": 30.0,
+    "percentage": 96.67,
+    "correct": 29,
+    "wrong": 1,
+    "blank": 0,
+    "multi": 0,
+    "review": 0,
+    "review_questions": [],
+    "questions": [
+      {
+        "q": 1,
+        "selected": [
+          0
+        ],
+        "key_answer": 1,
+        "outcome": "WRONG",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 2,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 3,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 4,
+        "selected": [
+          3
+        ],
+        "key_answer": 3,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 5,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 6,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 7,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 8,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 9,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 10,
+        "selected": [
+          3
+        ],
+        "key_answer": 3,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 11,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 12,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 13,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 14,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 15,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 16,
+        "selected": [
+          0
+        ],
+        "key_answer": 0,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 17,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 18,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 19,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 20,
+        "selected": [
+          0
+        ],
+        "key_answer": 0,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 21,
+        "selected": [
+          0
+        ],
+        "key_answer": 0,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 22,
+        "selected": [
+          0
+        ],
+        "key_answer": 0,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 23,
+        "selected": [
+          0
+        ],
+        "key_answer": 0,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 24,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 25,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 26,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 27,
+        "selected": [
+          0
+        ],
+        "key_answer": 0,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 28,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 29,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 30,
+        "selected": [
+          3
+        ],
+        "key_answer": 3,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      }
+    ]
+  }
+}

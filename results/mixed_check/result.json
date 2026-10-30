@@ -1,0 +1,555 @@
+{
+  "image": "samples\\q-paper_mixed.png",
+  "template_id": "q-paper",
+  "warp": {
+    "mode": "full_frame",
+    "page_confidence": 0.0,
+    "corners": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        1074.0,
+        0.0
+      ],
+      [
+        1074.0,
+        1517.0
+      ],
+      [
+        0.0,
+        1517.0
+      ]
+    ]
+  },
+  "calibration": {
+    "method": "gmm",
+    "threshold": 0.11568627506494522,
+    "separation": 18.149157618802924,
+    "mu_empty": 0.0017816057500338988,
+    "mu_marked": 0.8817643694813376,
+    "sigma_empty": 0.021564424882216725,
+    "sigma_marked": 0.0650906207023083,
+    "marked_count": 4,
+    "high_component": 1
+  },
+  "diagnostics": {
+    "mean_ink": 11.297807693481445,
+    "glare_fraction": 0.0,
+    "ring_baseline": 0.23137255012989044,
+    "score_min": 0.0,
+    "score_max": 0.946078434586525
+  },
+  "answers": {
+    "1": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "2": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "3": {
+      "selected": [
+        0,
+        2
+      ],
+      "state": "MULTI",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "4": {
+      "selected": [],
+      "state": "REVIEW",
+      "confidence": 0.0,
+      "reason": ""
+    },
+    "5": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "6": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "7": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "8": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "9": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "10": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "11": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "12": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "13": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "14": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "15": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "16": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "17": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "18": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "19": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "20": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "21": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "22": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "23": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "24": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "25": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "26": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "27": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "28": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "29": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "30": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 1.0,
+      "reason": ""
+    }
+  },
+  "grade": {
+    "total": 2.0,
+    "maximum": 30.0,
+    "percentage": 6.67,
+    "correct": 2,
+    "wrong": 0,
+    "blank": 26,
+    "multi": 1,
+    "review": 1,
+    "review_questions": [
+      4
+    ],
+    "questions": [
+      {
+        "q": 1,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 2,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 3,
+        "selected": [
+          0,
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "MULTI",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "MULTI"
+      },
+      {
+        "q": 4,
+        "selected": [],
+        "key_answer": 3,
+        "outcome": "REVIEW",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.0,
+        "reason": "REVIEW"
+      },
+      {
+        "q": 5,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 6,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 7,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 8,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 9,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 10,
+        "selected": [],
+        "key_answer": 3,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 11,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 12,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 13,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 14,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 15,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 16,
+        "selected": [],
+        "key_answer": 0,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 17,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 18,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 19,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 20,
+        "selected": [],
+        "key_answer": 0,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 21,
+        "selected": [],
+        "key_answer": 0,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 22,
+        "selected": [],
+        "key_answer": 0,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 23,
+        "selected": [],
+        "key_answer": 0,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 24,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 25,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 26,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 27,
+        "selected": [],
+        "key_answer": 0,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 28,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 29,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      },
+      {
+        "q": 30,
+        "selected": [],
+        "key_answer": 3,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "BLANK"
+      }
+    ]
+  }
+}

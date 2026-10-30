@@ -1,0 +1,538 @@
+{
+  "image": "samples\\q-paper_blank.png",
+  "template_id": "q-paper",
+  "warp": {
+    "mode": "full_frame",
+    "page_confidence": 0.0,
+    "corners": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        1074.0,
+        0.0
+      ],
+      [
+        1074.0,
+        1517.0
+      ],
+      [
+        0.0,
+        1517.0
+      ]
+    ]
+  },
+  "calibration": {
+    "method": "fallback",
+    "threshold": 0.12,
+    "separation": 0.0,
+    "mu_empty": 0.0,
+    "mu_marked": 0.0,
+    "sigma_empty": 0.0,
+    "sigma_marked": 0.0,
+    "marked_count": 0
+  },
+  "diagnostics": {
+    "mean_ink": 11.081711769104004,
+    "glare_fraction": 0.0,
+    "ring_baseline": 0.23137255012989044,
+    "score_min": 0.0,
+    "score_max": 0.0
+  },
+  "answers": {
+    "1": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "2": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "3": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "4": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "5": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "6": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "7": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "8": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "9": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "10": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "11": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "12": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "13": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "14": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "15": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "16": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "17": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "18": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "19": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "20": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "21": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "22": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "23": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "24": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "25": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "26": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "27": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "28": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "29": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    },
+    "30": {
+      "selected": [],
+      "state": "BLANK",
+      "confidence": 0.9526,
+      "reason": ""
+    }
+  },
+  "grade": {
+    "total": 0.0,
+    "maximum": 30.0,
+    "percentage": 0.0,
+    "correct": 0,
+    "wrong": 0,
+    "blank": 30,
+    "multi": 0,
+    "review": 0,
+    "review_questions": [],
+    "questions": [
+      {
+        "q": 1,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 2,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 3,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 4,
+        "selected": [],
+        "key_answer": 3,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 5,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 6,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 7,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 8,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 9,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 10,
+        "selected": [],
+        "key_answer": 3,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 11,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 12,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 13,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 14,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 15,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 16,
+        "selected": [],
+        "key_answer": 0,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 17,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 18,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 19,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 20,
+        "selected": [],
+        "key_answer": 0,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 21,
+        "selected": [],
+        "key_answer": 0,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 22,
+        "selected": [],
+        "key_answer": 0,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 23,
+        "selected": [],
+        "key_answer": 0,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 24,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 25,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 26,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 27,
+        "selected": [],
+        "key_answer": 0,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 28,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 29,
+        "selected": [],
+        "key_answer": 2,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      },
+      {
+        "q": 30,
+        "selected": [],
+        "key_answer": 3,
+        "outcome": "BLANK",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9526,
+        "reason": "BLANK"
+      }
+    ]
+  }
+}
