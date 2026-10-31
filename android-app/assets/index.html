@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f4ee">
+  <title>OMR Checker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand-row">
+        <div class="app-mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div>
+          <h1>OMR Checker</h1>
+          <p>30 questions · offline pilot</p>
+        </div>
+      </div>
+      <nav class="tabs" aria-label="App sections">
+        <button class="tab is-active" data-tab="key" type="button">Answer key</button>
+        <button class="tab" data-tab="scan" type="button">Photo</button>
+        <button class="tab" data-tab="live" type="button">Live AR</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="tab-key" class="tab-panel">
+        <div class="card intro-card">
+          <div class="eyebrow">Step 1</div>
+          <h2>Set the correct answers</h2>
+          <p>Tap the correct option for each question. ক = 1, খ = 2, গ = 3, ঘ = 4. One mark per question.</p>
+          <div class="bulk-row">
+            <input id="bulkInput" type="text" inputmode="numeric" autocomplete="off"
+                   placeholder="Paste 30 answers, e.g. 2,1,3,4,…">
+            <button id="bulkApply" class="btn small secondary" type="button">Apply</button>
+          </div>
+          <p id="bulkMessage" class="bulk-message" role="status"></p>
+        </div>
+
+        <div class="key-summary">
+          <div>
+            <strong id="keyCount">0 / 30</strong>
+            <span>answers set</span>
+          </div>
+          <div class="key-progress"><span id="keyProgress"></span></div>
+          <button id="clearKey" class="link-button" type="button">Clear</button>
+        </div>
+
+        <div id="keyGrid" class="key-grid" aria-label="Correct answers"></div>
+
+        <div class="sticky-action">
+          <button id="goScan" class="btn primary" type="button">Continue to scan</button>
+        </div>
+      </section>
+
+      <section id="tab-scan" class="tab-panel is-hidden">
+        <div class="card scan-card">
+          <div class="eyebrow">Step 2</div>
+          <h2>Scan the answer sheet</h2>
+          <p id="scanKeyState">Set all 30 answers first.</p>
+          <div class="scan-actions">
+            <button id="takePhoto" class="btn primary" type="button">
+              <span class="camera-icon" aria-hidden="true"></span>
+              Scan answer sheet
+            </button>
+            <button id="choosePhoto" class="btn secondary" type="button">Choose a photo</button>
+          </div>
+          <p class="hint">Lay the sheet flat and keep the pink border inside the photo. The app reads the sheet on the phone; nothing is uploaded.</p>
+          <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden>
+          <input id="galleryInput" type="file" accept="image/*" hidden>
+        </div>
+
+        <div id="processing" class="card processing is-hidden" role="status" aria-live="polite">
+          <span class="spinner" aria-hidden="true"></span>
+          <div>
+            <strong id="processingTitle">Reading sheet…</strong>
+            <p id="processingText">Finding the answer area.</p>
+          </div>
+        </div>
+
+        <div id="errorBox" class="card error-card is-hidden" role="alert">
+          <strong>Could not read the sheet</strong>
+          <p id="errorText"></p>
+          <button id="retryButton" class="btn secondary" type="button">Try again</button>
+        </div>
+
+        <div id="result" class="is-hidden">
+          <div class="result-hero">
+            <div class="result-kicker">Total mark</div>
+            <div class="result-score">
+              <span id="resultTotal">0</span><span class="result-max">/ <span id="resultMax">30</span></span>
+            </div>
+            <div id="resultVerdict" class="result-verdict">—</div>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat correct"><strong id="statCorrect">0</strong><span>correct</span></div>
+            <div class="stat wrong"><strong id="statWrong">0</strong><span>wrong</span></div>
+            <div class="stat blank"><strong id="statBlank">0</strong><span>blank</span></div>
+            <div class="stat multi"><strong id="statMulti">0</strong><span>double-marked</span></div>
+            <div class="stat review"><strong id="statReview">0</strong><span>review</span></div>
+          </div>
+
+          <div class="card preview-card">
+            <div class="preview-head">
+              <div>
+                <strong>Scanned answer area</strong>
+                <span id="scanMode">—</span>
+              </div>
+              <span class="not-saved">Not saved</span>
+            </div>
+            <canvas id="previewCanvas" aria-label="Scanned sheet preview"></canvas>
+            <div class="legend">
+              <span><i class="dot green"></i>correct</span>
+              <span><i class="dot red"></i>wrong</span>
+              <span><i class="dot blue"></i>key</span>
+              <span><i class="dot purple"></i>multi</span>
+              <span><i class="dot amber"></i>review</span>
+            </div>
+          </div>
+
+          <details class="card breakdown-card" open>
+            <summary>Question breakdown</summary>
+            <div id="breakdown" class="breakdown"></div>
+          </details>
+
+          <div class="scan-again-row">
+            <button id="scanAgain" class="btn primary" type="button">Scan another sheet</button>
+            <button id="backToKey" class="btn secondary" type="button">Edit answer key</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-live" class="tab-panel is-hidden">
+        <div class="card live-card">
+          <div class="eyebrow">Real time</div>
+          <h2>Live AR marking</h2>
+          <p id="liveKeyState">Set all 30 answers first.</p>
+
+          <div id="arStage" class="ar-stage is-hidden">
+            <video id="arVideo" playsinline muted autoplay></video>
+            <canvas id="arCanvas" aria-label="Live answer overlay"></canvas>
+            <div class="ar-hud">
+              <div id="arStatus" class="ar-status">Starting camera…</div>
+              <div id="arHudMark" class="ar-hud-mark is-hidden">
+                <span>MARK</span>
+                <strong id="arHudTotal">0</strong>
+                <em>/30</em>
+              </div>
+            </div>
+          </div>
+
+          <div id="arPlaceholder" class="ar-placeholder">
+            <div class="ar-frame-icon" aria-hidden="true"><span></span></div>
+            <strong>Point the camera at a sheet</strong>
+            <p>The total is written into the printed mark box. Green circles are correct, red are wrong, blue is the key, purple is double-marked.</p>
+          </div>
+
+          <div class="live-actions">
+            <button id="startLive" class="btn primary" type="button">Start live scan</button>
+            <button id="stopLive" class="btn secondary is-hidden" type="button">Stop camera</button>
+            <button id="toggleVoice" class="btn secondary voice-on" type="button">Voice: on</button>
+          </div>
+
+          <p id="liveError" class="live-error is-hidden" role="alert"></p>
+
+          <div class="legend live-legend">
+            <span><i class="dot green"></i>correct</span>
+            <span><i class="dot red"></i>wrong</span>
+            <span><i class="dot blue"></i>key</span>
+            <span><i class="dot purple"></i>multi</span>
+            <span><i class="dot amber"></i>review</span>
+          </div>
+          <p class="hint">Hold the sheet still for a moment. The result locks on, follows the sheet, and the mark is spoken aloud. Show the next sheet to scan again. If it does not lock, move closer until the pink frame fills the preview.</p>
+        </div>
+
+        <div id="liveStats" class="stat-grid is-hidden">
+          <div class="stat correct"><strong id="liveCorrect">0</strong><span>correct</span></div>
+          <div class="stat wrong"><strong id="liveWrong">0</strong><span>wrong</span></div>
+          <div class="stat blank"><strong id="liveBlank">0</strong><span>blank</span></div>
+          <div class="stat multi"><strong id="liveMulti">0</strong><span>double</span></div>
+          <div class="stat review"><strong id="liveReview">0</strong><span>review</span></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Pilot build · answers and results stay in memory</span>
+    </footer>
+  </div>
+
+  <script src="template-data.js"></script>
+  <script src="omr-engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

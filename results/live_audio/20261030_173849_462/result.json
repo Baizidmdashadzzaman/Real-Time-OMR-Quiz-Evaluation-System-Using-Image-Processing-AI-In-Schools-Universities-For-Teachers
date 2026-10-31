@@ -1,0 +1,676 @@
+{
+  "source": "continuous:camera 0",
+  "captured_at": "2026-10-30T17:38:51",
+  "image_size": [
+    1280,
+    720
+  ],
+  "template_id": "q-paper",
+  "warp": {
+    "mode": "page_quad",
+    "page_confidence": 0.7059,
+    "corners": [
+      [
+        547.0,
+        78.0
+      ],
+      [
+        986.0,
+        52.0
+      ],
+      [
+        983.0,
+        666.0
+      ],
+      [
+        561.0,
+        654.0
+      ]
+    ],
+    "debug": {
+      "source_size": [
+        1280,
+        720
+      ],
+      "warped_size": [
+        1433,
+        2024
+      ]
+    }
+  },
+  "calibration": {
+    "method": "gmm",
+    "threshold": 0.06498478150706975,
+    "separation": 3.3704460536537586,
+    "mu_empty": 0.0227838143018186,
+    "mu_marked": 0.27933713160445295,
+    "sigma_empty": 0.014066989068417052,
+    "sigma_marked": 0.1067247565124781,
+    "marked_count": 31,
+    "high_component": 0
+  },
+  "diagnostics": {
+    "mean_ink": 65.42326354980469,
+    "glare_fraction": 0.010798540335237444,
+    "ring_baseline": 0.06603972241282463,
+    "score_min": 0.00347485039383173,
+    "score_max": 0.4330563767343505
+  },
+  "answers": {
+    "1": {
+      "selected": [
+        0
+      ],
+      "state": "ANSWERED",
+      "confidence": 0.9298,
+      "reason": ""
+    },
+    "2": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "3": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "4": {
+      "selected": [
+        3
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "5": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "6": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "7": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "8": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "9": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "10": {
+      "selected": [
+        3
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "11": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "12": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "13": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "14": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "15": {
+      "selected": [],
+      "state": "REVIEW",
+      "confidence": 0.8526,
+      "reason": ""
+    },
+    "16": {
+      "selected": [
+        0
+      ],
+      "state": "UNOBSERVED",
+      "confidence": 0.0,
+      "reason": "glare/occlusion on গ"
+    },
+    "17": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "18": {
+      "selected": [
+        2
+      ],
+      "state": "UNOBSERVED",
+      "confidence": 0.0,
+      "reason": "glare/occlusion on খ"
+    },
+    "19": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "20": {
+      "selected": [
+        0
+      ],
+      "state": "UNOBSERVED",
+      "confidence": 0.0,
+      "reason": "glare/occlusion on ঘ"
+    },
+    "21": {
+      "selected": [
+        0
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "22": {
+      "selected": [
+        0
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "23": {
+      "selected": [
+        0
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "24": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "25": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "26": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "27": {
+      "selected": [
+        0
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "28": {
+      "selected": [
+        1
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "29": {
+      "selected": [
+        2
+      ],
+      "state": "ANSWERED",
+      "confidence": 1.0,
+      "reason": ""
+    },
+    "30": {
+      "selected": [
+        3
+      ],
+      "state": "REVIEW",
+      "confidence": 1.0,
+      "reason": ""
+    }
+  },
+  "grade": {
+    "total": 24.0,
+    "maximum": 30.0,
+    "percentage": 80.0,
+    "correct": 24,
+    "wrong": 1,
+    "blank": 0,
+    "multi": 0,
+    "review": 5,
+    "review_questions": [
+      15,
+      16,
+      18,
+      20,
+      30
+    ],
+    "questions": [
+      {
+        "q": 1,
+        "selected": [
+          0
+        ],
+        "key_answer": 1,
+        "outcome": "WRONG",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.9298,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 2,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 3,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 4,
+        "selected": [
+          3
+        ],
+        "key_answer": 3,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 5,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 6,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 7,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 8,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 9,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 10,
+        "selected": [
+          3
+        ],
+        "key_answer": 3,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 11,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 12,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 13,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 14,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 15,
+        "selected": [],
+        "key_answer": 1,
+        "outcome": "REVIEW",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.8526,
+        "reason": "REVIEW"
+      },
+      {
+        "q": 16,
+        "selected": [
+          0
+        ],
+        "key_answer": 0,
+        "outcome": "REVIEW",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.0,
+        "reason": "glare/occlusion on গ"
+      },
+      {
+        "q": 17,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 18,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "REVIEW",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.0,
+        "reason": "glare/occlusion on খ"
+      },
+      {
+        "q": 19,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 20,
+        "selected": [
+          0
+        ],
+        "key_answer": 0,
+        "outcome": "REVIEW",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 0.0,
+        "reason": "glare/occlusion on ঘ"
+      },
+      {
+        "q": 21,
+        "selected": [
+          0
+        ],
+        "key_answer": 0,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 22,
+        "selected": [
+          0
+        ],
+        "key_answer": 0,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 23,
+        "selected": [
+          0
+        ],
+        "key_answer": 0,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 24,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 25,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 26,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 27,
+        "selected": [
+          0
+        ],
+        "key_answer": 0,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 28,
+        "selected": [
+          1
+        ],
+        "key_answer": 1,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 29,
+        "selected": [
+          2
+        ],
+        "key_answer": 2,
+        "outcome": "CORRECT",
+        "marks": 1.0,
+        "awarded": 1.0,
+        "confidence": 1.0,
+        "reason": "ANSWERED"
+      },
+      {
+        "q": 30,
+        "selected": [
+          3
+        ],
+        "key_answer": 3,
+        "outcome": "REVIEW",
+        "marks": 1.0,
+        "awarded": 0.0,
+        "confidence": 1.0,
+        "reason": "REVIEW"
+      }
+    ]
+  }
+}

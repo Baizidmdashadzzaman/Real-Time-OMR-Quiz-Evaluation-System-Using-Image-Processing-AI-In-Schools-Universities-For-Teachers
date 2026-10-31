@@ -5,7 +5,11 @@ the pipeline described in [realtime-plan.md](realtime-plan.md). The full
 operating manual — setup, checks, troubleshooting, and redesigning the sheet —
 is in [documentation.md](documentation.md). The Android product and engineering
 plan — platform choice, paper/print pipeline, database, and delivery phases —
-is in [mobile-app-plan.md](mobile-app-plan.md).
+is in [mobile-app-plan.md](mobile-app-plan.md). A working offline Android
+pilot that sets a 30-question key, scans a sheet with the live camera, projects
+correct/wrong marks and the total onto the paper, and speaks the mark is in
+[android-app/README.md](android-app/README.md); the installable test build is
+[OMR-Checker-pilot.apk](android-app/OMR-Checker-pilot.apk).
 
 The pipeline:
 
