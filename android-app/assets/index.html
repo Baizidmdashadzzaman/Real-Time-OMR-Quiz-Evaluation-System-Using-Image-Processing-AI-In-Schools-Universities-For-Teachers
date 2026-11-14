@@ -6,6 +6,9 @@
   <meta name="theme-color" content="#f6f4ee">
   <title>OMR Checker</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="app-extra.css">
+  <link rel="stylesheet" href="home-guide.css">
+  <link rel="stylesheet" href="paper.css">
 </head>
 <body>
   <div class="app">
@@ -16,25 +19,149 @@
         </div>
         <div>
           <h1>OMR Checker</h1>
-          <p>30 questions · offline pilot</p>
+          <p id="headerSub">Saved on this phone · offline</p>
         </div>
+        <button class="topbar-link" type="button" data-go="guide">Guide</button>
       </div>
       <nav class="tabs" aria-label="App sections">
-        <button class="tab is-active" data-tab="key" type="button">Answer key</button>
+        <button class="tab is-active" data-tab="home" type="button">Home</button>
+        <button class="tab" data-tab="subjects" type="button">Subjects</button>
+        <button class="tab" data-tab="key" type="button">Key</button>
         <button class="tab" data-tab="scan" type="button">Photo</button>
-        <button class="tab" data-tab="live" type="button">Live AR</button>
+        <button class="tab" data-tab="live" type="button">Live</button>
+        <button class="tab" data-tab="paper" type="button">Print</button>
       </nav>
     </header>
 
     <main>
-      <section id="tab-key" class="tab-panel">
+      <section id="tab-home" class="tab-panel">
+        <div class="hero">
+          <div class="hero-eyebrow">Classroom OMR · no internet needed</div>
+          <h2>One photo.<br>Every mark counted.</h2>
+          <p>Print the answer sheet, keep the key on the phone, then scan each paper.
+             Right answers turn green, wrong turn red, and the total lands in the mark box.</p>
+          <div class="hero-actions">
+            <button class="btn hero-btn" type="button" data-go="scan">Scan a sheet</button>
+            <button class="btn hero-btn ghost" type="button" data-go="subjects">Set up a subject</button>
+          </div>
+          <div class="hero-stats">
+            <div><strong>8</strong><span>sheet sizes</span></div>
+            <div><strong>A–D</strong><span>four options</span></div>
+            <div><strong>0</strong><span>photos uploaded</span></div>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <h3>Three steps, every time</h3>
+          <button class="text-link" type="button" data-go="guide">Full guide</button>
+        </div>
+
+        <div class="step-list">
+          <button class="step-card" type="button" data-go="paper">
+            <span class="step-num">1</span>
+            <span class="step-body">
+              <strong>Print your school's sheet</strong>
+              <span>Add the school name, logo and address once, then print the OMR sheet for any question count.</span>
+            </span>
+            <span class="step-go" aria-hidden="true">›</span>
+          </button>
+          <button class="step-card" type="button" data-go="subjects">
+            <span class="step-num">2</span>
+            <span class="step-body">
+              <strong>Subject, exam and answer key</strong>
+              <span>Add the subject, choose the question count of the sheet you print, then tap the correct answers A–D.</span>
+            </span>
+            <span class="step-go" aria-hidden="true">›</span>
+          </button>
+          <button class="step-card" type="button" data-go="scan">
+            <span class="step-num">3</span>
+            <span class="step-body">
+              <strong>Scan the paper</strong>
+              <span>Take one photo of the sheet, or pick one from the gallery. The marks are drawn on the photo.</span>
+            </span>
+            <span class="step-go" aria-hidden="true">›</span>
+          </button>
+          <button class="step-card" type="button" data-go="live">
+            <span class="step-num">4</span>
+            <span class="step-body">
+              <strong>Or mark live</strong>
+              <span>Hold the camera over a pile of sheets and the overlay follows each paper as you move.</span>
+            </span>
+            <span class="step-go" aria-hidden="true">›</span>
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="eyebrow">What it reads</div>
+          <ul class="tick-list">
+            <li>15 to 60 questions, four options A–D, on the sheets you print from the app</li>
+            <li>Correct, wrong, blank, double-marked and answers that need a second look</li>
+            <li>Marks per question, so a paper with weighted questions still totals correctly</li>
+          </ul>
+          <p class="hint">Every subject, key and mark stays in the phone's own database. Nothing is uploaded and no network is used while reading.</p>
+        </div>
+
+        <button class="guide-banner" type="button" data-go="guide">
+          <span class="guide-banner-text">
+            <strong>How to use the app</strong>
+            <span>Printing the sheet, scanning, what the colours mean, and what to do when a sheet will not read.</span>
+          </span>
+          <span class="guide-arrow" aria-hidden="true">›</span>
+        </button>
+      </section>
+
+      <section id="tab-subjects" class="tab-panel is-hidden">
         <div class="card intro-card">
-          <div class="eyebrow">Step 1</div>
-          <h2>Set the correct answers</h2>
-          <p>Tap the correct option for each question. ক = 1, খ = 2, গ = 3, ঘ = 4. One mark per question.</p>
+          <div class="eyebrow">Setup</div>
+          <h2>Subjects</h2>
+          <p>Give every subject its own exam: question count, answer key and marks per question. Everything is kept in the phone's own database.</p>
+          <div class="bulk-row">
+            <input id="subjectName" type="text" autocomplete="off"
+                   placeholder="Subject name, e.g. Bangla 1st paper">
+            <button id="addSubjectBtn" class="btn small primary" type="button">Add</button>
+          </div>
+          <p id="subjectMessage" class="bulk-message" role="status"></p>
+        </div>
+
+        <div id="subjectList" class="stack"></div>
+
+        <div id="subjectDetail" class="card is-hidden">
+          <div class="eyebrow">Subject</div>
+          <div class="detail-head">
+            <h2 id="detailName">—</h2>
+            <div class="detail-actions">
+              <button id="renameSubjectBtn" class="link-button" type="button">Rename</button>
+              <button id="deleteSubjectBtn" class="link-button danger" type="button">Delete</button>
+            </div>
+          </div>
+
+          <div id="subjectRename" class="inline-form is-hidden">
+            <input id="subjectRenameInput" type="text" autocomplete="off">
+            <button id="subjectRenameSave" class="btn small primary" type="button">Save</button>
+            <button id="subjectRenameCancel" class="btn small secondary" type="button">Cancel</button>
+          </div>
+
+          <p class="hint">Add one exam per test or paper. Pick the question count that matches the sheet you print.</p>
+
+          <div class="bulk-row">
+            <input id="examName" type="text" autocomplete="off" placeholder="Exam name, e.g. Weekly test 3">
+            <select id="examCount" class="select" aria-label="Question count"></select>
+            <button id="addExamBtn" class="btn small primary" type="button">Add exam</button>
+          </div>
+          <p id="examMessage" class="bulk-message" role="status"></p>
+
+          <div id="examList" class="stack"></div>
+        </div>
+      </section>
+
+      <section id="tab-key" class="tab-panel is-hidden">
+        <div class="card intro-card">
+          <div class="eyebrow">Step 2</div>
+          <h2 id="keyTitle">Answer key</h2>
+          <p id="keySubtitle">Choose a subject and an exam on the Subjects tab first.</p>
           <div class="bulk-row">
             <input id="bulkInput" type="text" inputmode="numeric" autocomplete="off"
-                   placeholder="Paste 30 answers, e.g. 2,1,3,4,…">
+                   placeholder="Paste the answers, e.g. 2,1,3,4,…">
             <button id="bulkApply" class="btn small secondary" type="button">Apply</button>
           </div>
           <p id="bulkMessage" class="bulk-message" role="status"></p>
@@ -42,7 +169,7 @@
 
         <div class="key-summary">
           <div>
-            <strong id="keyCount">0 / 30</strong>
+            <strong id="keyCount">0 / 0</strong>
             <span>answers set</span>
           </div>
           <div class="key-progress"><span id="keyProgress"></span></div>
@@ -52,21 +179,22 @@
         <div id="keyGrid" class="key-grid" aria-label="Correct answers"></div>
 
         <div class="sticky-action">
-          <button id="goScan" class="btn primary" type="button">Continue to scan</button>
+          <button id="saveKey" class="btn primary" type="button" disabled>Save to phone</button>
         </div>
+        <p id="saveMessage" class="bulk-message" role="status"></p>
       </section>
 
       <section id="tab-scan" class="tab-panel is-hidden">
         <div class="card scan-card">
-          <div class="eyebrow">Step 2</div>
+          <div class="eyebrow">Step 3</div>
           <h2>Scan the answer sheet</h2>
-          <p id="scanKeyState">Set all 30 answers first.</p>
+          <p id="scanKeyState">Set an answer key first.</p>
           <div class="scan-actions">
-            <button id="takePhoto" class="btn primary" type="button">
+            <button id="takePhoto" class="btn primary" type="button" disabled>
               <span class="camera-icon" aria-hidden="true"></span>
               Scan answer sheet
             </button>
-            <button id="choosePhoto" class="btn secondary" type="button">Choose a photo</button>
+            <button id="choosePhoto" class="btn secondary" type="button" disabled>Choose a photo</button>
           </div>
           <p class="hint">Lay the sheet flat and keep the pink border inside the photo. The app reads the sheet on the phone; nothing is uploaded.</p>
           <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden>
@@ -91,7 +219,7 @@
           <div class="result-hero">
             <div class="result-kicker">Total mark</div>
             <div class="result-score">
-              <span id="resultTotal">0</span><span class="result-max">/ <span id="resultMax">30</span></span>
+              <span id="resultTotal">0</span><span class="result-max">/ <span id="resultMax">0</span></span>
             </div>
             <div id="resultVerdict" class="result-verdict">—</div>
           </div>
@@ -110,9 +238,26 @@
                 <strong>Scanned answer area</strong>
                 <span id="scanMode">—</span>
               </div>
-              <span class="not-saved">Not saved</span>
+              <span class="not-saved">Saved on phone</span>
             </div>
             <canvas id="previewCanvas" aria-label="Scanned sheet preview"></canvas>
+            <div class="legend">
+              <span><i class="dot green"></i>correct</span>
+              <span><i class="dot red"></i>wrong</span>
+              <span><i class="dot blue"></i>key</span>
+              <span><i class="dot purple"></i>multi</span>
+              <span><i class="dot amber"></i>review</span>
+            </div>
+          </div>
+
+          <div class="card preview-card">
+            <div class="preview-head">
+              <div>
+                <strong>Marked photo</strong>
+                <span>Right and wrong answers drawn on the photo you scanned</span>
+              </div>
+            </div>
+            <canvas id="photoCanvas" aria-label="Scanned photo with the marks drawn on top"></canvas>
             <div class="legend">
               <span><i class="dot green"></i>correct</span>
               <span><i class="dot red"></i>wrong</span>
@@ -138,7 +283,7 @@
         <div class="card live-card">
           <div class="eyebrow">Real time</div>
           <h2>Live AR marking</h2>
-          <p id="liveKeyState">Set all 30 answers first.</p>
+          <p id="liveKeyState">Set an answer key first.</p>
 
           <div id="arStage" class="ar-stage is-hidden">
             <video id="arVideo" playsinline muted autoplay></video>
@@ -148,19 +293,20 @@
               <div id="arHudMark" class="ar-hud-mark is-hidden">
                 <span>MARK</span>
                 <strong id="arHudTotal">0</strong>
-                <em>/30</em>
+                <em id="arHudMax">/0</em>
               </div>
             </div>
           </div>
 
           <div id="arPlaceholder" class="ar-placeholder">
             <div class="ar-frame-icon" aria-hidden="true"><span></span></div>
-            <strong>Point the camera at a sheet</strong>
+            <strong>Point the camera at the answer table</strong>
             <p>The total is written into the printed mark box. Green circles are correct, red are wrong, blue is the key, purple is double-marked.</p>
           </div>
 
           <div class="live-actions">
-            <button id="startLive" class="btn primary" type="button">Start live scan</button>
+            <button id="startLive" class="btn primary" type="button" disabled>Start live scan</button>
+            <button id="nextLive" class="btn primary is-hidden" type="button">Scan next sheet</button>
             <button id="stopLive" class="btn secondary is-hidden" type="button">Stop camera</button>
             <button id="toggleVoice" class="btn secondary voice-on" type="button">Voice: on</button>
           </div>
@@ -174,7 +320,7 @@
             <span><i class="dot purple"></i>multi</span>
             <span><i class="dot amber"></i>review</span>
           </div>
-          <p class="hint">Hold the sheet still for a moment. The result locks on, follows the sheet, and the mark is spoken aloud. Show the next sheet to scan again. If it does not lock, move closer until the pink frame fills the preview.</p>
+          <p class="hint">Fill the dashed box with the printed answer table and the mark box beside it — only what is inside the box is read, so a second sheet, the desk or the page header cannot confuse it. Hold still for a moment; the app reads the sheet the same way it reads an uploaded photo, so a live scan and a photo give the same mark. Show the next sheet to scan again.</p>
         </div>
 
         <div id="liveStats" class="stat-grid is-hidden">
@@ -185,15 +331,193 @@
           <div class="stat review"><strong id="liveReview">0</strong><span>review</span></div>
         </div>
       </section>
+
+      <section id="tab-paper" class="tab-panel is-hidden">
+        <div class="card paper-card">
+          <div class="eyebrow">Print module</div>
+          <h2>Your school's OMR sheet</h2>
+          <p>The heading below is printed on the sheet. The answer grid is the production design the scanner reads — 15 questions per row, four bubbles A–D, on A4.</p>
+
+          <div class="paper-logo-row">
+            <div id="paperLogoBox" class="paper-logo-box"><span>Add<br>logo</span></div>
+            <div class="paper-logo-actions">
+              <strong>School logo</strong>
+              <span>A square picture prints best.</span>
+              <div class="field-row">
+                <label class="btn small secondary" for="paperLogo">Choose logo</label>
+                <button id="paperLogoClear" class="btn small danger is-hidden" type="button">Remove</button>
+              </div>
+            </div>
+            <input id="paperLogo" type="file" accept="image/*" hidden>
+          </div>
+
+          <label class="field-label" for="paperSchool">School name</label>
+          <input id="paperSchool" class="field-input" type="text" placeholder="e.g. Shaheed Smriti High School">
+
+          <label class="field-label" for="paperAddress">Address</label>
+          <input id="paperAddress" class="field-input" type="text" placeholder="e.g. Mirpur, Dhaka">
+
+          <label class="field-label" for="paperLine">Exam line</label>
+          <input id="paperLine" class="field-input" type="text" placeholder="e.g. Class 9 · Mathematics · Half-yearly 2026">
+
+          <label class="field-label" for="paperNote">Footer note (optional)</label>
+          <input id="paperNote" class="field-input" type="text" placeholder="e.g. Use a black ball pen. Do not fold the sheet.">
+
+          <div class="field-row" style="margin-top:12px">
+            <div>
+              <label class="field-label" for="paperName">Paper name</label>
+              <input id="paperName" class="field-input" type="text" placeholder="Paper 1">
+            </div>
+            <div>
+              <label class="field-label" for="paperCount">Questions</label>
+              <select id="paperCount" class="field-select" aria-label="Question count"></select>
+            </div>
+          </div>
+
+          <div class="paper-count-row">
+            <select id="paperPick" class="field-select" aria-label="Saved papers"></select>
+            <button id="paperNew" class="btn small secondary" type="button">New</button>
+            <button id="paperDelete" class="btn small secondary" type="button">Clear</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="paper-toolbar">
+            <strong>Questions &amp; answers</strong>
+            <span id="paperSaved" class="paper-saved">Saved on phone</span>
+          </div>
+          <p class="hint" style="margin-top:4px!important">Type a question if you want it kept with the paper. Tap A, B, C or D to mark the correct answer — those become the exam key.</p>
+          <div id="paperStats" class="paper-stat"></div>
+          <p id="paperKeysHint" class="paper-note"></p>
+          <div id="paperQuestions" class="pq-list" style="margin-top:12px"></div>
+        </div>
+
+        <div class="card">
+          <div class="preview-head">
+            <div>
+              <strong>A4 preview — exactly what prints</strong>
+              <span>The single production grid · print at 100%</span>
+            </div>
+          </div>
+          <div class="paper-shell">
+            <div id="paperStage" class="paper-stage"></div>
+          </div>
+          <div class="paper-actions">
+            <button id="paperPrint" class="btn primary wide" type="button">Print / Save as PDF</button>
+            <button id="paperFit" class="btn secondary" type="button">Fit preview</button>
+            <button id="paperPushKey" class="btn secondary" type="button">Send key to exam</button>
+          </div>
+          <p id="paperMessage" class="bulk-message" role="status"></p>
+          <p class="hint">Android's print dialog offers “Save as PDF”, which keeps the A4 sheet on the phone. Print at 100% — never “fit to page” — or the bubbles will not line up with the scanner.</p>
+        </div>
+      </section>
+
+      <section id="tab-guide" class="tab-panel is-hidden">
+        <div class="card guide-head">
+          <button class="text-link back-link" type="button" data-go="home">‹ Home</button>
+          <div class="eyebrow">Instructions</div>
+          <h2>Using OMR Checker</h2>
+          <p>Set the paper up once, then every sheet takes a few seconds. No photo, key or mark ever leaves the phone.</p>
+        </div>
+
+        <div class="card">
+          <div class="eyebrow">Before the class</div>
+          <ol class="guide-steps">
+            <li><strong>Add the subject</strong> on the Subjects tab — for example “Bangla 1st paper” or “Class 9 Science”.</li>
+            <li><strong>Add the exam</strong> inside that subject and pick the question count that matches the sheet you are about to print.</li>
+            <li><strong>Mark the answer key</strong> on the Key tab. Tap A–D for each question, or paste the whole key as <em>2,1,3,4…</em> and press Apply.</li>
+            <li><strong>Set the marks</strong> if questions are not all worth one mark — type the mark beside the question before saving.</li>
+            <li><strong>Save to phone.</strong> The key is stored in the phone's database, so it is ready for the next paper too.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <div class="eyebrow">Printing the sheet</div>
+          <p>Two ways to get a sheet. The <strong>Print</strong> tab builds one from scratch with your school's logo, name and address printed at the top; an exam can also print its own sheet. Both use the production design: 15 questions per row with A–D stacked under every question, and the Student ID, Subject Code and Total Marks boxes down the right side.</p>
+          <div class="size-chips">
+            <span class="size-chip">15</span>
+            <span class="size-chip">20</span>
+            <span class="size-chip">25</span>
+            <span class="size-chip is-hero">30</span>
+            <span class="size-chip">40</span>
+            <span class="size-chip">45</span>
+            <span class="size-chip">50</span>
+            <span class="size-chip">60</span>
+          </div>
+          <div class="guide-note">
+            Print at <strong>100% / actual size</strong> on A4 with “fit to page” switched off. If the printer shrinks the page, the bubbles move and the sheet reads badly. Only sheets printed from this app are read — every exam uses the same 60-slot sheet, and an exam with fewer questions leaves the lower rows empty.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="eyebrow">Scanning a paper</div>
+          <ol class="guide-steps">
+            <li><strong>Lay the sheet on a flat, evenly lit surface.</strong> Daylight or a ceiling light is enough; avoid a shadow falling across the answer area.</li>
+            <li><strong>Fill the frame.</strong> The pink border of the answer table should sit inside the photo with a little margin, and the page should not be tilted much.</li>
+            <li><strong>Use a dark pen or pencil</strong> and fill the bubble fully. A faint tick reads as “review”.</li>
+            <li><strong>Check the marked photo</strong> before writing the total — every bubble the app read is circled on the picture.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <div class="eyebrow">What the colours mean</div>
+          <div class="legend legend-rows">
+            <span><i class="dot green"></i><b>Correct</b> — matches the key</span>
+            <span><i class="dot red"></i><b>Wrong</b> — a different option is filled</span>
+            <span><i class="dot blue"></i><b>Key</b> — the right answer, drawn for comparison</span>
+            <span><i class="dot purple"></i><b>Double</b> — two bubbles filled, no mark given</span>
+            <span><i class="dot amber"></i><b>Review</b> — the mark is faint or unclear</span>
+          </div>
+          <p class="hint">A blank question scores nothing. Only bubbles darker than the printed ring count as filled, so smudges and printing shadows are ignored.</p>
+        </div>
+
+        <div class="card">
+          <div class="eyebrow">When something goes wrong</div>
+          <div class="faq">
+            <details>
+              <summary>The photo is not read at all</summary>
+              <p>Usually the answer table is outside the photo or the page is too tilted. Take the picture straight above the sheet, with the whole pink border visible and space around it.</p>
+            </details>
+            <details>
+              <summary>Answers come out wrong or “review”</summary>
+              <p>Light pencil marks and half-filled bubbles are the usual cause. Fill each bubble fully with a dark pen. If only a few answers look wrong, check the marked photo to see which bubble the app actually measured.</p>
+            </details>
+            <details>
+              <summary>The live overlay jumps between sheets</summary>
+              <p>Move the phone slowly and let the progress bar reach 100% before lifting it. Show the next sheet only after the total appears.</p>
+            </details>
+            <details>
+              <summary>The total does not match the paper</summary>
+              <p>Check the question count of the exam — a 40-question exam read against a 30-question sheet cannot total correctly. The count must match the sheet you printed.</p>
+            </details>
+            <details>
+              <summary>Where are my subjects and marks kept?</summary>
+              <p>In the phone's own app database. They survive closing the app and do not need a network. Deleting a subject deletes its exams and keys with it.</p>
+            </details>
+          </div>
+        </div>
+
+        <button class="guide-banner" type="button" data-go="home">
+          <span class="guide-banner-text">
+            <strong>Back to the start</strong>
+            <span>Home shows the three steps and jumps straight into scanning.</span>
+          </span>
+          <span class="guide-arrow" aria-hidden="true">›</span>
+        </button>
+      </section>
     </main>
 
     <footer class="footer">
-      <span>Pilot build · answers and results stay in memory</span>
+      <span id="footerNote">Subjects, keys and marks stay in the phone database</span>
     </footer>
   </div>
 
-  <script src="template-data.js"></script>
+  <div id="printArea" aria-hidden="true"></div>
+
+  <script src="sheet-designs.js"></script>
   <script src="omr-engine.js"></script>
+  <script src="store.js"></script>
+  <script src="paper.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

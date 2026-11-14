@@ -1,0 +1,261 @@
+/* Additions for subjects/exams, per-question marks and the printable sheet. */
+
+.tabs .tab {
+  flex: 1 1 0;
+  padding: 8px 4px;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.stack { display: flex; flex-direction: column; gap: 10px; }
+
+.spacer { flex: 1 1 auto; }
+
+.subject-card,
+.exam-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+}
+
+.subject-card.is-active,
+.exam-card.is-active {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 2px var(--teal-soft);
+}
+
+.subject-card strong,
+.exam-card strong { display: block; font-size: 15px; }
+
+.subject-card span,
+.exam-card span { color: var(--muted); font-size: 12.5px; }
+
+.detail-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.detail-head h2 { margin: 0; font-size: 20px; }
+
+.detail-actions { display: flex; gap: 12px; }
+
+.link-button.danger { color: var(--red); }
+
+.link-button.is-armed {
+  background: var(--red);
+  color: #fff;
+  border-radius: 8px;
+  padding: 2px 8px;
+}
+
+.inline-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.inline-form input {
+  flex: 1 1 140px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  background: #fff;
+}
+
+.exam-row-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.exam-card { flex-direction: column; align-items: stretch; }
+
+.exam-meta { margin-top: 2px; }
+
+.select {
+  padding: 10px 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  background: #fff;
+  color: inherit;
+}
+
+.mark-input {
+  width: 52px;
+  padding: 8px 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  text-align: center;
+  background: #fff;
+}
+
+.q-row .mark-input { margin-left: 6px; }
+
+.q-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.q-row .options { flex: 1 1 auto; }
+
+.print-hint {
+  color: var(--muted);
+  font-size: 12.5px;
+  margin: 6px 0 0;
+}
+
+/* ------------------------------------------------------------ printed sheet */
+
+#printArea { display: none; }
+
+.sheet-page {
+  position: relative;
+  width: 210mm;
+  height: 297mm;
+  background: #fff;
+  color: #111;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow: hidden;
+}
+
+.sheet-title,
+.sheet-sub,
+.sheet-foot,
+.sheet-note {
+  position: absolute;
+  left: 0;
+  width: 210mm;
+  text-align: center;
+}
+
+.sheet-title { font-size: 6mm; font-weight: 700; letter-spacing: 0.2mm; }
+.sheet-sub { font-size: 3.4mm; color: #444; }
+.sheet-foot { font-size: 3mm; color: #666; }
+.sheet-note { top: 60mm; font-size: 4mm; color: #444; padding: 0 20mm; }
+
+.sheet-frame {
+  position: absolute;
+  border: 0.6mm solid #c86f88;
+  border-radius: 2mm;
+}
+
+.sheet-opt {
+  position: absolute;
+  width: 6mm;
+  text-align: center;
+  font-size: 3.4mm;
+  font-weight: 700;
+  color: #333;
+}
+
+.sheet-q {
+  position: absolute;
+  width: 8mm;
+  text-align: right;
+  font-size: 3.2mm;
+  color: #222;
+}
+
+.sheet-bubble {
+  position: absolute;
+  border: 0.3mm solid #c86f88;
+  border-radius: 50%;
+}
+
+.sheet-markbox {
+  position: absolute;
+  border: 0.5mm solid #c86f88;
+  border-radius: 1.5mm;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.sheet-markbox span {
+  font-size: 2.6mm;
+  letter-spacing: 0.6mm;
+  color: #888;
+  margin-top: 1mm;
+}
+
+/* The printed sheet from print/v3: letters inside the bubbles, the table
+   rules of the paper sheet, and the three boxes down the right side. */
+
+.sheet-bubble b {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 2.9mm;
+  font-weight: 600;
+  line-height: 1;
+  color: #c86f88;
+}
+
+.sheet-band {
+  position: absolute;
+  background: #f7c4df;
+}
+
+.sheet-rule {
+  position: absolute;
+  background: #efc6d2;
+}
+
+.sheet-rule.is-dark { background: #c86f88; }
+
+.sheet-field {
+  position: absolute;
+  font-size: 3.2mm;
+  color: #333;
+}
+
+.sheet-side {
+  position: absolute;
+  box-sizing: border-box;
+  height: 6mm;
+  border: 0.3mm solid #c86f88;
+  border-bottom: none;
+  text-align: center;
+  font-size: 3mm;
+  font-weight: 600;
+  color: #444;
+  padding-top: 0.9mm;
+}
+
+@media print {
+  @page { size: A4 portrait; margin: 0; }
+
+  html, body {
+    background: #fff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  body > *:not(#printArea) { display: none !important; }
+
+  #printArea { display: block !important; }
+  #printArea .sheet-page { page-break-after: always; }
+}

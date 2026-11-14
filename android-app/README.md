@@ -1,17 +1,12 @@
-# OMR Checker — Android pilot
+# OMR Checker — Android app
 
-An offline Android app for the 30-question answer sheet in
-`templates/q-paper.json`. A teacher sets the correct answers, then either:
+An offline Android app for answer sheets with **15, 25, 30, 40 or 50
+questions**. A teacher keeps one key per subject and exam — with its own marks
+per question — and then either points the live camera at a sheet, or scans a
+photo. Everything is stored in the phone's own SQLite database; nothing is
+uploaded.
 
-- points the live camera at a sheet and gets the mark drawn directly on the
-  sheet while it is read aloud, or
-- takes/chooses a still photo and gets a normal result screen.
-
-Nothing is uploaded and no key or result is saved.
-
-**APK:** [OMR-Checker-pilot.apk](OMR-Checker-pilot.apk) (version 1.1-live-ar)
-
-![Live AR overlay](screenshots/live-ar-overlay.jpg)
+**APK:** [OMR-Checker-pilot.apk](OMR-Checker-pilot.apk) (version 1.2-subjects-db)
 
 ## Install on the phone
 
@@ -23,116 +18,154 @@ Nothing is uploaded and no key or result is saved.
 
 The build is signed with a local debug key. It is for testing, not a Play Store
 release. The camera permission is requested the first time **Start live scan**
-is tapped.
+is tapped. Upgrading over the previous pilot keeps the database and its keys.
 
-## Set the answer key
+## Subjects, exams and marks
 
-On the **Answer key** tab:
+The first tab manages the database.
 
-- tap the correct option for all 30 questions (`ক` = 1, `খ` = 2, `গ` = 3,
-  `ঘ` = 4), or
-- paste 30 answers as digits (`223432…` or `2,2,3,4,…`) and press **Apply**.
+- **Add a subject** (for example *Bangla 1st paper*). Tap **Rename** or
+  **Delete** to change it; a second tap on Delete confirms, because a WebView
+  cannot show a native confirm dialog.
+- Each subject holds any number of **exams**. When adding one, pick the question
+  count that matches the sheet you will print: 15, 25, 30, 40 or 50.
+- Deleting a subject removes its exams and their answer keys (SQL `ON DELETE
+  CASCADE`), so no orphan rows are left behind.
 
-One mark per question. The key stays in memory only; reopening the app starts
-with an empty key.
+Open an exam to edit its key. Every question row has the four options and a
+**marks box** — set 1 mark, 2 marks, halves, whatever the paper uses. Marks are
+stored per question, so totals are exact.
+
+The key is only written when you press **Save to phone**. Until then the edits
+are on screen only; the button stays disabled when nothing has changed. Answers
+can be tapped one by one or pasted (`223432…`, `2,2,3,4,…`, or `A B C D`).
+
+## Question counts and printed sheets
+
+`assets/sheet-designs.js` holds the printed sheet, measured from the PDFs in
+`layout-omr/`. It is **one design**: 15 question columns per row, each column a
+stack of four bubbles A–D, and a new row of 15 questions underneath when the exam
+is longer. Nothing else changes with the count — the columns, the bubble size
+(3.45 mm radius) and the spacing (9.01 mm A→D, 43.45 mm between question rows) are
+the same on every sheet:
+
+| Count | Rows | Bubbles |
+|---|---|---|
+| 15 | 1 row of 15 | 60 |
+| 20 | 2 rows: 15 + 5 | 80 |
+| 25 | 2 rows: 15 + 10 | 100 |
+| 30 | 2 rows: 15 + 15 | 120 |
+| 40 | 3 rows: 15 + 15 + 10 | 160 |
+| 45 | 3 rows: 15 + 15 + 15 | 180 |
+| 50 | 4 rows: 15 + 15 + 15 + 5 | 200 |
+| 60 | 4 rows: 15 + 15 + 15 + 15 | 240 |
+
+The printed layout and the reader come from the **same numbers**, so a sheet
+printed from the app always lines up. Use **Print sheet** on an exam row and
+print at **100% / actual size** — never "fit to page". Android's print service
+offers a printer or *Save as PDF*.
+
+A photo is measured as it is first. Only when that finds almost nothing does the
+reader line the printed bubble rings up with the template (a search of about
+±1.2 mm, with a small size correction) and keep the better of the two reads, so a
+page outline that is a millimetre out no longer skews every bubble score.
+The sheet carries the title, name/class/subject lines, the answer table with its
+numbers and A–D letters, and the Student ID, Subject Code and Total Marks boxes
+down the right side, exactly where the paper sheets put them.
+
+
+## Answer key and grading
+
+- Grading is per question: correct counts the question's marks, wrong/blank/
+  double-marked/review count as zero.
+- Questions with no key show as `NO KEY` instead of being guessed, and the
+  maximum only includes questions that have an answer.
+- A scan does not need a complete key; a partly filled key simply grades fewer
+  questions.
 
 ## Live AR scan
 
-1. Set all 30 answers.
-2. Open the **Live AR** tab and tap **Start live scan**.
-3. Allow the camera when Android asks.
-4. Hold the sheet so the whole pink answer frame is visible and reasonably
-   close to the camera. Fill most of the preview; a sheet that is very small in
-   the frame may not be found.
-5. Hold still for a moment. The app:
-   - outlines the sheet,
-   - draws green rings on correct answers, red on wrong answers, blue on the
-     teacher's key when the student chose another option, purple on
-     double-marked questions, and amber markers on blank/review questions,
-   - writes the total mark into the printed **total marks** box on the sheet,
-   - speaks the mark in English, for example “Mark 29 out of 30.”
-6. The overlay follows the sheet while it stays in view. Remove the sheet to
-   clear the result, then show the next one. A new sheet is detected
-   automatically.
+1. Open an exam, check the key, then open **Live**.
+2. Tap **Start live scan** and allow the camera.
+3. Hold the whole pink frame in view. The status line shows
+   `Reading… 40%` while several frames are averaged; it reaches 100% and the
+   mark locks in.
+4. Green rings = correct, red = wrong, blue = the key answer, purple =
+   double-marked, amber = blank/review. The total is drawn in the printed mark
+   box and spoken aloud.
 
-**Voice: on/off** mutes or restores the spoken mark. The total and marks stay
-on screen either way.
+What changed for a moving hand:
 
-If the camera is not found, or the sheet is not being detected, move closer so
-the pink frame is larger, avoid glare, and keep the whole frame inside the
-preview. The app reads entirely on the phone.
+- **Multi-frame fusion.** Each bubble keeps a running average of its fill plus a
+  hysteresis band. A decision changes only after *three consecutive* frames push
+  it the same way, and the sheet is only reported when nothing has moved for two
+  frames.
+- **No full-page warp while scanning.** Bubbles are sampled straight from the
+  camera frame through the sheet homography
+  (`readProjected`), which is what makes ~10 frames per second affordable.
+- **Corner smoothing.** The four corners are EMA-filtered; small tremors no
+  longer re-solve the geometry, while a real move snaps and clears the buffer.
+- **Motion gate.** Frames taken while the sheet is moving are skipped instead of
+  being read, and the status says *Hold still…*.
+- **Too far away is rejected** instead of guessed: if a bubble is under ~2 px in
+  the frame the app asks you to move closer.
 
-## Still-photo scan
+The old behaviour — a single reading as soon as the corners looked stable — is
+what made a slightly moving sheet produce a wrong mark.
 
-The **Photo** tab keeps the original workflow:
+## Photo scan
 
-1. Tap **Scan answer sheet** for the system camera, or **Choose a photo**.
-2. Keep the entire pink answer area inside the photo. The sheet does not need
-   to be perfectly straight.
-3. The result shows the total, correct/wrong/blank/double/review counts, a
-   marked preview, and a question-by-question breakdown.
+The **Photo** tab keeps the still-image path: take or choose a photo, the sheet
+is located from the pink frame (or the page outline), warped to the canonical
+page and read once, with a full breakdown and a marked preview.
 
-Use this when live detection is difficult, for example in poor light or with a
-sheet that is far away.
+## Where the data lives
 
-## How the live mode works
+`OmrDatabase` (SQLite, `omr.db`) with foreign keys enabled:
 
-- A WebView camera stream (`getUserMedia`) provides frames without leaving the
-  app.
-- The existing offline engine finds the printed pink frame (or the page
-  outline), maps it to the 150 DPI template, and grades the bubbles.
-- The inverse homography projects every grade result back onto the current
-  camera frame, so the circles sit on the printed bubbles and the total sits in
-  the printed mark box rather than in a separate result panel.
-- The sheet is tracked continuously. A scan is taken after the corners are
-  stable for about 300 ms; the result stays locked and follows the sheet until
-  it is removed or moved to a new position.
-- The mark is spoken through Android's native `TextToSpeech` bridge, with the
-  browser speech API as a fallback.
-- The camera is released when the app is backgrounded or another tab is
-  opened. The key is kept in memory.
+```sql
+subjects(id, name UNIQUE, created_at)
+exams(id, subject_id -> subjects, name, template_id, question_count,
+      option_count, created_at, UNIQUE(subject_id, name))
+answer_keys(exam_id -> exams, question_no, correct_option, marks)
+```
 
-Processing is near-real-time, not video-frame-rate. A lock-in takes roughly a
-second or two depending on the phone; the video preview itself stays live.
+`DatabaseBridge` exposes it to the WebView as JSON through `window.OmrDatabase`.
+Inside a plain browser the same API is emulated with localStorage
+(`assets/store.js`) so the screens can be developed without a device.
+
+Upgrades are additive only — `onUpgrade` must never drop the tables, or a
+teacher loses every class list.
 
 ## Verification done
 
-- Android emulator (API 37):
-  - APK installs and updates over the previous pilot.
-  - Answer key entry works by paste.
-  - Live AR camera preview starts with the virtual back camera.
-  - Runtime camera permission prompt appears on first use and the camera starts
-    after **While using the app** is chosen.
-  - App backgrounding stops the live camera and returns to the start state.
-- Full AR pipeline inside the Android WebView (synthetic camera frame of
-  `Asset 1@4x.png`, sample key): **29/30, 1 wrong, 0 review**, with the green /
-  red / blue circles, green sheet outline, and **29** in the printed total box.
-- Native TTS: logcat shows a Google TTS synthesis request immediately after the
-  AR mark is produced.
-- Desktop browser with a synthetic camera feed:
-  - upright sheet: **29/30** with overlay;
-  - sheet rotated 6°: **29/30**, circles and total remained registered.
-- Still-photo engine sample suite with the sample key:
-  - `Asset 1@4x.png`, `Asset 2@4x.png`, `q-paper_tilted.jpg`: **29/30**;
-  - `q-paper_mixed.png`: **2/30**, 1 double-marked and 1 review;
-  - `q-paper_blank.png`: **0/30**.
+- `node test/pipeline-test.js` — renders each design (15/25/30/40/50), fills a
+  key and grades it:
+  - every question correct, total equals maximum, a different key scores 0, a
+    blank sheet scores 0;
+  - the live projected read finds every mark in a 1280-px camera frame;
+  - per-question marks produce the expected maximum (15 questions with five
+    2-mark questions = 20);
+  - fusion settles, ignores two blurred frames, and does not flip an answer on a
+    swapped frame. **All checks pass.**
+- `bash build_apk.sh` — compiles, dexes, aligns, signs and verifies the APK
+  (version 1.2-subjects-db).
+- The page loads without console errors and the subject/exam flow works in the
+  browser fallback store.
 
-A physical phone camera, printed sheet, real lighting, and a classroom stack
-still need testing. The emulator and synthetic feed are not a substitute for
-those.
+A physical phone camera, printed sheets at each count, and a real classroom
+stack still need testing. The synthetic renders are geometry checks, not a
+substitute for paper.
 
-## Limits of this pilot
+## Limits of this build
 
-- Only the current 30-question / 4-option sheet geometry.
-- One mark per question; per-question marks are not editable.
-- No student ID, subject code, CSV export, database, or result history.
-- No manual correction screen after a scan.
-- Live mode needs the pink frame to be reasonably large and in focus. Very
-  small, glared, or badly creased sheets may fall back to the still-photo mode.
+- Results are not saved; the database holds subjects, exams, keys and marks.
+- No student ID, CSV export or result history yet.
+- The 30-question design can only be printed from the original PDF.
+- Live mode needs the pink frame reasonably large and in focus.
 - The spoken phrase is English only.
-- If the sheet design changes, `assets/template-data.js` and the bubble
-  geometry assumptions must be regenerated/updated; the engine is not a generic
-  OMR designer.
+- Sheet geometry changes need a new entry in `sheet-designs.js`; the engine reads
+  any template with the same shape.
 
 ## Build
 
@@ -144,6 +177,7 @@ Prerequisites on this machine:
 
 ```bash
 bash android-app/build_apk.sh
+node android-app/test/pipeline-test.js
 ```
 
 The script compiles resources with `aapt2`, compiles the Java shell, dexes with

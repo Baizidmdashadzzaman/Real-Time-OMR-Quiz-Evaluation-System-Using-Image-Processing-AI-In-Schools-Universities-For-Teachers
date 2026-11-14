@@ -536,7 +536,8 @@ main { padding-top: 16px; }
   padding: 5px 7px;
   border-radius: 7px;
 }
-#previewCanvas {
+#previewCanvas,
+#photoCanvas {
   display: block;
   width: 100%;
   height: auto;

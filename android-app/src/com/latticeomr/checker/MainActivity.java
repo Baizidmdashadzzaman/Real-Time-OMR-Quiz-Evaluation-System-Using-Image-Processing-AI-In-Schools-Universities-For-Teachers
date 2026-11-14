@@ -3,12 +3,16 @@ package com.latticeomr.checker;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -85,7 +89,7 @@ public class MainActivity extends Activity {
         webView.setBackgroundColor(Color.WHITE);
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(false);
+        settings.setDomStorageEnabled(true);
         settings.setAllowFileAccess(true);
         settings.setAllowContentAccess(true);
         // The scanner is a local file:// page.  A picked photo is copied into
@@ -101,6 +105,7 @@ public class MainActivity extends Activity {
         settings.setMediaPlaybackRequiresUserGesture(false);
 
         webView.addJavascriptInterface(new Bridge(), "AndroidBridge");
+        webView.addJavascriptInterface(new DatabaseBridge(this), "OmrDatabase");
         webView.setWebViewClient(new WebViewClient());
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -265,6 +270,38 @@ public class MainActivity extends Activity {
         @JavascriptInterface
         public boolean hasCamera() {
             return hasCameraPermission();
+        }
+
+        /** Sends the printable sheet in the page to the Android print service. */
+        @JavascriptInterface
+        public void printSheet() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (webView == null) return;
+                        PrintManager manager =
+                                (PrintManager) getSystemService(Context.PRINT_SERVICE);
+                        if (manager == null) {
+                            Toast.makeText(MainActivity.this,
+                                    "Printing is not available on this device.",
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        PrintDocumentAdapter adapter =
+                                webView.createPrintDocumentAdapter("OMR sheet");
+                        PrintAttributes attributes = new PrintAttributes.Builder()
+                                .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+                                .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
+                                .build();
+                        manager.print("OMR-sheet", adapter, attributes);
+                    } catch (Exception error) {
+                        Toast.makeText(MainActivity.this,
+                                "Printing is not available on this device.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
         }
     }
 

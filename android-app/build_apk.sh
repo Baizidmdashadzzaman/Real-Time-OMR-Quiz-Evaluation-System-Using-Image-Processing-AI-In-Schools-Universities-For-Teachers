@@ -43,8 +43,8 @@ echo "==> Linking manifest and assets"
   -A assets \
   --min-sdk-version 24 \
   --target-sdk-version 35 \
-  --version-code 2 \
-  --version-name "1.1-live-ar" \
+  --version-code 24 \
+  --version-name "1.21-guide" \
   build/res.zip
 
 echo "==> Compiling Java"

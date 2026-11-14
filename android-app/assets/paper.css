@@ -1,0 +1,301 @@
+/* The school paper module: header form, question editor and A4 preview. */
+
+.tabs { grid-template-columns: repeat(6, 1fr); }
+.tabs .tab { font-size: 11px; padding: 9px 1px; }
+
+.paper-toolbar .paper-saved { margin-left: auto; }
+
+.paper-logo-actions .field-row .btn {
+  flex: 1 1 0;
+  min-height: 34px;
+  padding: 7px 8px;
+  font-size: 11.5px;
+  border-radius: 9px;
+}
+
+/* School logo printed on the sheet, top-left of the heading. */
+.sheet-logo {
+  position: absolute;
+  left: 12mm;
+  top: 7mm;
+  width: 16mm;
+  height: 16mm;
+  object-fit: contain;
+}
+
+.paper-card { padding-bottom: 14px; }
+
+.paper-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 13px;
+}
+
+.paper-logo-box {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  border-radius: 14px;
+  border: 1.5px dashed #d3cbb9;
+  background: #fbf8f0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #b3aa96;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.paper-logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #fff;
+}
+
+.paper-logo-actions { display: flex; flex-direction: column; gap: 6px; }
+.paper-logo-actions strong { font-size: 12.5px; }
+.paper-logo-actions span { color: var(--muted); font-size: 11px; }
+
+.field-label {
+  display: block;
+  margin-top: 11px;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .02em;
+  color: #53605b;
+}
+
+.field-input,
+.field-area,
+.field-select {
+  width: 100%;
+  margin-top: 5px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #fbfaf6;
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  padding: 11px 11px;
+  min-height: 42px;
+}
+
+.field-input:focus,
+.field-area:focus,
+.field-select:focus {
+  outline: 2px solid rgba(15, 118, 110, .26);
+  border-color: var(--teal);
+}
+
+.field-area { resize: vertical; min-height: 60px; line-height: 1.45; }
+
+.field-row { display: flex; gap: 8px; }
+.field-row > * { flex: 1 1 0; min-width: 0; }
+
+.paper-count-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.paper-count-row .field-select { width: auto; flex: 1 1 120px; }
+
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+
+.chip {
+  background: #f2efe6;
+  border: 1px solid var(--line);
+  color: #41504b;
+  border-radius: 999px;
+  padding: 6px 11px;
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.chip.is-on {
+  background: var(--teal-soft);
+  border-color: #b7ded7;
+  color: var(--teal-dark);
+}
+
+/* --------------------------------------------------------- question editor */
+
+.paper-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.paper-toolbar strong { font-size: 13px; }
+.paper-toolbar .spacer { flex: 1 1 auto; }
+
+.pq-list { display: flex; flex-direction: column; gap: 8px; }
+
+.pq {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fffdf8;
+  padding: 9px 10px 10px;
+}
+
+.pq-wrap { display: flex; gap: 8px; align-items: center; }
+
+.pq-num {
+  flex: 0 0 26px;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.pq.is-keyed .pq-num { color: var(--teal); }
+
+.pq-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  border-bottom: 1px dashed #e0dacd;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 12.5px;
+  padding: 6px 2px;
+}
+
+.pq-text:focus { outline: none; border-bottom-color: var(--teal); }
+
+.pq-opts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 7px 0 0 34px;
+}
+
+.pq-opt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.pq-key {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid #d7d0c0;
+  background: #fbf8f0;
+  color: #7c837e;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+.pq-key.is-on {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(15, 118, 110, .22);
+}
+
+.pq-opt input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 1px solid #ece6d9;
+  border-radius: 9px;
+  background: #fff;
+  font: inherit;
+  font-size: 12px;
+  padding: 6px 7px;
+  color: var(--ink);
+}
+
+.pq-opt input:focus { outline: 1.5px solid rgba(15, 118, 110, .3); border-color: var(--teal); }
+
+/* ------------------------------------------------------------- A4 preview */
+
+.paper-shell {
+  margin-top: 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #f3f0e7;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.paper-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.paper-stage .sheet-page {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .12);
+  transform-origin: top left;
+}
+
+.paper-stage .sheet-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.paper-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.paper-actions .btn { width: 100%; font-size: 13px; padding: 11px 9px; }
+.paper-actions .wide { grid-column: 1 / -1; }
+
+.paper-note {
+  margin: 3px 0 0 !important;
+  font-size: 11px !important;
+  color: #88918d !important;
+  line-height: 1.5 !important;
+}
+
+.paper-stat {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+.paper-stat b { color: var(--ink); font-weight: 750; }
+
+.paper-saved {
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: var(--teal-soft);
+  padding: 5px 8px;
+  border-radius: 7px;
+}
+
+@media (max-width: 350px) {
+  .pq-opts { grid-template-columns: 1fr; margin-left: 0; }
+  .paper-actions { grid-template-columns: 1fr; }
+}

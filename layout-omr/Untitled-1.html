@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="blue" />
+  <title>OMR quiz exam</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+      body {
+          font-family: 'Tiro Bangla', sans-serif;
+          margin: 0;
+          padding: 0;
+          background: #fdfdfd;
+      }
+      h5 {
+          text-align: center;
+          margin-bottom: 15px;
+      }
+      .container {
+          /* width: 95%; */
+          max-width: 1200px;
+          margin: 20px auto;
+      }
+      table {
+          width: 100%;
+          border-collapse: collapse;
+      }
+      table, th, td {
+          border: 1px solid #df96ac;
+      }
+      th, td {
+          text-align: center;
+          padding: 5px;
+      }
+      th {
+          background-color: #f7c4df;
+      }
+      .circle-label {
+          width: 25px;
+          height: 25px;
+          border: 1px solid #df96ac;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          cursor: pointer;
+          color: #df96ac;
+          font-size: 14px;
+      }
+      .form-check-input {
+          display: none;
+      }
+      .form-check-input:checked + .circle-label {
+          background-color: #302a29;
+          color: white;
+          border-color: #aa697b;
+      }
+      .form-check {
+          padding: 2px 0;
+      }
+      .row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 15px;
+      }
+      .col-12 { flex: 1 1 100%; }
+      .col-9 { flex: 0 0 75%; }
+      .col-3 { flex: 0 0 22.9%; display: flex; flex-direction: column; gap: 10px; }
+      
+      .box {
+          border: 1px solid #df96ac;
+          border-radius: 5px;
+          padding: 10px;
+          background: #fff;
+      }
+      input[type="text"] {
+          width: 90%;
+          padding: 6px;
+          font-size: 14px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          text-align: center;
+      }
+      #total-marks {
+          font-size: 80px;
+          font-weight: bold;
+          color: #302a29;
+      }
+      .btn {
+          display: block;
+          width: 100%;
+          padding: 12px;
+          background: #302a29;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          font-size: 16px;
+          cursor: pointer;
+          text-align: center;
+          font-family: 'Tiro Bangla';
+      }
+      .btn:hover {
+          background: #000;
+      }
+  </style>
+  <link href='https://fonts.googleapis.com/css?family=Tiro Bangla' rel='stylesheet'>
+
+    <style>
+          body
+        {
+            width:100%;
+            background: rgb(204,204,204);
+            overflow-x: hidden;
+        }
+        page[size="A4"] {
+            background: white;
+            width: 21cm;
+            min-height: 29.7cm;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 0.5cm;
+            box-shadow: 0 0 0.1cm rgba(0,0,0,0.5);
+            -o-box-shadow: 0 0 0.1cm rgba(0,0,0,0.5);
+            -webkit-box-shadow: 0 0 0.1cm rgba(0,0,0,0.5);
+            -moz-box-shadow: 0 0 0.1cm rgba(0,0,0,0.5);
+        }
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        @media print {
+            body, page[size="A4"] {
+                margin: 0;
+                box-shadow: 0;
+            }
+        }
+        .first
+        {
+            width:100%;
+            /* height:1080px; */
+            margin:auto; padding:5px 0px 0px 0px;
+        }
+        .second
+        {
+            width:728px;
+            height:1060px;
+            margin:auto; background-color:red;
+        }
+        th,td{
+            font-size:13px;	padding:3px;
+        }
+        #footer
+        {
+            width:400px;
+            margin:auto;
+            background-color:#FFF;
+        }
+        #footer a
+        {
+            text-decoration:none;
+            text-align:center;
+            font-size:12px;
+        }
+        @media print{
+            #print{
+                display:none;
+            }
+            .print{
+                display:none;
+            }
+        }
+        .upon{
+            width:400px;
+            height:auto;
+            margin:auto;
+        }
+        .upon h3{font-size:22px}
+        #site_header_logo{
+            position: relative;
+            width:105px;
+            height:100px;
+            float:left;
+            margin-top:-10px;
+            margin-left:10px;
+        }
+        a{
+            text-decoration:none;
+            color:inherit;
+        }
+        a.tooltip {outline:none; }
+        a.tooltip strong {line-height:30px;}
+        a.tooltip:hover {text-decoration:none;}
+        a.tooltip span {
+            z-index:10;display:none; padding:14px 20px;
+            margin-top:30px; margin-left:2px;
+            width:300px; line-height:16px;
+        }
+        a.tooltip:hover span{
+            display:inline; position:absolute; color:#111;
+            border:1px solid #DCA; background:#fffAF0;
+            font-size:16px;
+        }
+        .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
+
+        /*CSS3 extras*/
+        a.tooltip span
+        {
+            border-radius:4px;
+            box-shadow: 5px 5px 8px #CCC;
+        }
+        
+        @media print {
+  .box {
+    border: 1px solid #df96ac !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+    </style>
+    <link href='https://fonts.googleapis.com/css?family=Tiro Bangla' rel='stylesheet'>
+  <style>
+    .btn {
+      padding: 8px 15px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #0056b3;
+    }
+
+    /* Modal background */
+    .modal {
+      display: none; 
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+
+    /* Modal box */
+    .modal-content {
+      background: #fff;
+      width: 400px;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 5px;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-content label {
+      display: block;
+      margin: 8px 0 3px;
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 6px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .modal-content button {
+      padding: 8px 15px;
+      background: green;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .modal-content button:hover {
+      background: darkgreen;
+    }
+  </style>
+
+</head>
+<body>
+
+
+    <br class="print">
+
+<button type="button" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark print">
+<a href="http://127.0.0.1:8000/question-paper/omr-sheet">Back to question paper</a>
+</button>
+<button class="print" style="margin-top: 10px;margin-right: 10px" onclick="window.print()">Print</button>
+
+
+<br class="print" />
+<br class="print" />
+
+<page size="A4">
+    <div class="first">
+
+
+        <div style="width:90%; height:auto; margin:auto">
+            
+            <div id="site_header_logo">
+                <br>
+                <br>
+                <a href="#" style="text-decoration:none; cursor:pointer">
+                    <img src="http://127.0.0.1:8000/LogoImageFolder/1-3-1640952397-logo new.png" width="100" >
+                </a>
+            </div>
+
+
+            <div class="upon">
+                <h1 align="center">Al Quran Academy</h1>
+                <h5 align="center" style="margin-top:-10px">Kadhurkhil, Boalkhali, Chittagong, Bangladesh. 01867941367, 01831970333, 01819505964</h5>
+                <h5 align="center" style="margin-top:-10px">
+                    Class: Grade 2, Session: 2025, Semester: 1st Semester, Group: A
+                </h5>
+                <h5 align="center" style="margin-top:-10px">
+                    Subject: Math, Total number: 
+                </h5>
+            </div>
+            <br>
+            <hr>
+        </div>
+        
+        <div style="clear:both; width:100%; height:10px"></div>
+
+
+
+    <div class="container" style="padding-left:20px;padding-right:20px;">
+      <div class="row box">
+          <div class="col-9">
+              <table>
+                                                              <tr>
+                                                        <th>
+                                
+                                1
+                              </th>
+                                                        <th>
+                                
+                                2
+                              </th>
+                                                        <th>
+                                
+                                3
+                              </th>
+                                                        <th>
+                                
+                                4
+                              </th>
+                                                        <th>
+                                
+                                5
+                              </th>
+                                                        <th>
+                                
+                                6
+                              </th>
+                                                        <th>
+                                
+                                7
+                              </th>
+                                                        <th>
+                                
+                                8
+                              </th>
+                                                        <th>
+                                
+                                9
+                              </th>
+                                                        <th>
+                                
+                                10
+                              </th>
+                                                        <th>
+                                
+                                11
+                              </th>
+                                                        <th>
+                                
+                                12
+                              </th>
+                                                        <th>
+                                
+                                13
+                              </th>
+                                                        <th>
+                                
+                                14
+                              </th>
+                                                        <th>
+                                
+                                15
+                              </th>
+                                                </tr>
+                      <tr>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q1" id="q1a">
+                                              <label class="circle-label" for="q1a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q1" id="q1b">
+                                              <label class="circle-label" for="q1b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q1" id="q1c">
+                                              <label class="circle-label" for="q1c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q1" id="q1d">
+                                              <label class="circle-label" for="q1d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q2" id="q2a">
+                                              <label class="circle-label" for="q2a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q2" id="q2b">
+                                              <label class="circle-label" for="q2b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q2" id="q2c">
+                                              <label class="circle-label" for="q2c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q2" id="q2d">
+                                              <label class="circle-label" for="q2d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q3" id="q3a">
+                                              <label class="circle-label" for="q3a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q3" id="q3b">
+                                              <label class="circle-label" for="q3b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q3" id="q3c">
+                                              <label class="circle-label" for="q3c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q3" id="q3d">
+                                              <label class="circle-label" for="q3d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q4" id="q4a">
+                                              <label class="circle-label" for="q4a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q4" id="q4b">
+                                              <label class="circle-label" for="q4b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q4" id="q4c">
+                                              <label class="circle-label" for="q4c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q4" id="q4d">
+                                              <label class="circle-label" for="q4d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q5" id="q5a">
+                                              <label class="circle-label" for="q5a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q5" id="q5b">
+                                              <label class="circle-label" for="q5b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q5" id="q5c">
+                                              <label class="circle-label" for="q5c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q5" id="q5d">
+                                              <label class="circle-label" for="q5d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q6" id="q6a">
+                                              <label class="circle-label" for="q6a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q6" id="q6b">
+                                              <label class="circle-label" for="q6b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q6" id="q6c">
+                                              <label class="circle-label" for="q6c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q6" id="q6d">
+                                              <label class="circle-label" for="q6d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q7" id="q7a">
+                                              <label class="circle-label" for="q7a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q7" id="q7b">
+                                              <label class="circle-label" for="q7b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q7" id="q7c">
+                                              <label class="circle-label" for="q7c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q7" id="q7d">
+                                              <label class="circle-label" for="q7d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q8" id="q8a">
+                                              <label class="circle-label" for="q8a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q8" id="q8b">
+                                              <label class="circle-label" for="q8b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q8" id="q8c">
+                                              <label class="circle-label" for="q8c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q8" id="q8d">
+                                              <label class="circle-label" for="q8d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q9" id="q9a">
+                                              <label class="circle-label" for="q9a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q9" id="q9b">
+                                              <label class="circle-label" for="q9b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q9" id="q9c">
+                                              <label class="circle-label" for="q9c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q9" id="q9d">
+                                              <label class="circle-label" for="q9d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q10" id="q10a">
+                                              <label class="circle-label" for="q10a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q10" id="q10b">
+                                              <label class="circle-label" for="q10b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q10" id="q10c">
+                                              <label class="circle-label" for="q10c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q10" id="q10d">
+                                              <label class="circle-label" for="q10d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q11" id="q11a">
+                                              <label class="circle-label" for="q11a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q11" id="q11b">
+                                              <label class="circle-label" for="q11b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q11" id="q11c">
+                                              <label class="circle-label" for="q11c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q11" id="q11d">
+                                              <label class="circle-label" for="q11d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q12" id="q12a">
+                                              <label class="circle-label" for="q12a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q12" id="q12b">
+                                              <label class="circle-label" for="q12b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q12" id="q12c">
+                                              <label class="circle-label" for="q12c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q12" id="q12d">
+                                              <label class="circle-label" for="q12d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q13" id="q13a">
+                                              <label class="circle-label" for="q13a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q13" id="q13b">
+                                              <label class="circle-label" for="q13b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q13" id="q13c">
+                                              <label class="circle-label" for="q13c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q13" id="q13d">
+                                              <label class="circle-label" for="q13d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q14" id="q14a">
+                                              <label class="circle-label" for="q14a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q14" id="q14b">
+                                              <label class="circle-label" for="q14b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q14" id="q14c">
+                                              <label class="circle-label" for="q14c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q14" id="q14d">
+                                              <label class="circle-label" for="q14d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q15" id="q15a">
+                                              <label class="circle-label" for="q15a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q15" id="q15b">
+                                              <label class="circle-label" for="q15b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q15" id="q15c">
+                                              <label class="circle-label" for="q15c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q15" id="q15d">
+                                              <label class="circle-label" for="q15d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                </tr>
+                                                              <tr>
+                                                        <th>
+                                
+                                16
+                              </th>
+                                                        <th>
+                                
+                                17
+                              </th>
+                                                        <th>
+                                
+                                18
+                              </th>
+                                                        <th>
+                                
+                                19
+                              </th>
+                                                        <th>
+                                
+                                20
+                              </th>
+                                                        <th>
+                                
+                                21
+                              </th>
+                                                        <th>
+                                
+                                22
+                              </th>
+                                                        <th>
+                                
+                                23
+                              </th>
+                                                        <th>
+                                
+                                24
+                              </th>
+                                                        <th>
+                                
+                                25
+                              </th>
+                                                        <th>
+                                
+                                26
+                              </th>
+                                                        <th>
+                                
+                                27
+                              </th>
+                                                        <th>
+                                
+                                28
+                              </th>
+                                                        <th>
+                                
+                                29
+                              </th>
+                                                        <th>
+                                
+                                30
+                              </th>
+                                                </tr>
+                      <tr>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q16" id="q16a">
+                                              <label class="circle-label" for="q16a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q16" id="q16b">
+                                              <label class="circle-label" for="q16b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q16" id="q16c">
+                                              <label class="circle-label" for="q16c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q16" id="q16d">
+                                              <label class="circle-label" for="q16d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q17" id="q17a">
+                                              <label class="circle-label" for="q17a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q17" id="q17b">
+                                              <label class="circle-label" for="q17b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q17" id="q17c">
+                                              <label class="circle-label" for="q17c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q17" id="q17d">
+                                              <label class="circle-label" for="q17d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q18" id="q18a">
+                                              <label class="circle-label" for="q18a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q18" id="q18b">
+                                              <label class="circle-label" for="q18b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q18" id="q18c">
+                                              <label class="circle-label" for="q18c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q18" id="q18d">
+                                              <label class="circle-label" for="q18d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q19" id="q19a">
+                                              <label class="circle-label" for="q19a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q19" id="q19b">
+                                              <label class="circle-label" for="q19b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q19" id="q19c">
+                                              <label class="circle-label" for="q19c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q19" id="q19d">
+                                              <label class="circle-label" for="q19d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q20" id="q20a">
+                                              <label class="circle-label" for="q20a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q20" id="q20b">
+                                              <label class="circle-label" for="q20b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q20" id="q20c">
+                                              <label class="circle-label" for="q20c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q20" id="q20d">
+                                              <label class="circle-label" for="q20d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q21" id="q21a">
+                                              <label class="circle-label" for="q21a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q21" id="q21b">
+                                              <label class="circle-label" for="q21b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q21" id="q21c">
+                                              <label class="circle-label" for="q21c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q21" id="q21d">
+                                              <label class="circle-label" for="q21d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q22" id="q22a">
+                                              <label class="circle-label" for="q22a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q22" id="q22b">
+                                              <label class="circle-label" for="q22b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q22" id="q22c">
+                                              <label class="circle-label" for="q22c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q22" id="q22d">
+                                              <label class="circle-label" for="q22d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q23" id="q23a">
+                                              <label class="circle-label" for="q23a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q23" id="q23b">
+                                              <label class="circle-label" for="q23b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q23" id="q23c">
+                                              <label class="circle-label" for="q23c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q23" id="q23d">
+                                              <label class="circle-label" for="q23d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q24" id="q24a">
+                                              <label class="circle-label" for="q24a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q24" id="q24b">
+                                              <label class="circle-label" for="q24b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q24" id="q24c">
+                                              <label class="circle-label" for="q24c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q24" id="q24d">
+                                              <label class="circle-label" for="q24d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q25" id="q25a">
+                                              <label class="circle-label" for="q25a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q25" id="q25b">
+                                              <label class="circle-label" for="q25b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q25" id="q25c">
+                                              <label class="circle-label" for="q25c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q25" id="q25d">
+                                              <label class="circle-label" for="q25d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q26" id="q26a">
+                                              <label class="circle-label" for="q26a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q26" id="q26b">
+                                              <label class="circle-label" for="q26b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q26" id="q26c">
+                                              <label class="circle-label" for="q26c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q26" id="q26d">
+                                              <label class="circle-label" for="q26d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q27" id="q27a">
+                                              <label class="circle-label" for="q27a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q27" id="q27b">
+                                              <label class="circle-label" for="q27b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q27" id="q27c">
+                                              <label class="circle-label" for="q27c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q27" id="q27d">
+                                              <label class="circle-label" for="q27d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q28" id="q28a">
+                                              <label class="circle-label" for="q28a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q28" id="q28b">
+                                              <label class="circle-label" for="q28b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q28" id="q28c">
+                                              <label class="circle-label" for="q28c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q28" id="q28d">
+                                              <label class="circle-label" for="q28d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q29" id="q29a">
+                                              <label class="circle-label" for="q29a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q29" id="q29b">
+                                              <label class="circle-label" for="q29b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q29" id="q29c">
+                                              <label class="circle-label" for="q29c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q29" id="q29d">
+                                              <label class="circle-label" for="q29d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q30" id="q30a">
+                                              <label class="circle-label" for="q30a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q30" id="q30b">
+                                              <label class="circle-label" for="q30b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q30" id="q30c">
+                                              <label class="circle-label" for="q30c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q30" id="q30d">
+                                              <label class="circle-label" for="q30d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                </tr>
+                                                              <tr>
+                                                        <th>
+                                
+                                31
+                              </th>
+                                                        <th>
+                                
+                                32
+                              </th>
+                                                        <th>
+                                
+                                33
+                              </th>
+                                                        <th>
+                                
+                                34
+                              </th>
+                                                        <th>
+                                
+                                35
+                              </th>
+                                                        <th>
+                                
+                                36
+                              </th>
+                                                        <th>
+                                
+                                37
+                              </th>
+                                                        <th>
+                                
+                                38
+                              </th>
+                                                        <th>
+                                
+                                39
+                              </th>
+                                                        <th>
+                                
+                                40
+                              </th>
+                                                        <th>
+                                
+                                41
+                              </th>
+                                                        <th>
+                                
+                                42
+                              </th>
+                                                        <th>
+                                
+                                43
+                              </th>
+                                                        <th>
+                                
+                                44
+                              </th>
+                                                        <th>
+                                
+                                45
+                              </th>
+                                                </tr>
+                      <tr>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q31" id="q31a">
+                                              <label class="circle-label" for="q31a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q31" id="q31b">
+                                              <label class="circle-label" for="q31b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q31" id="q31c">
+                                              <label class="circle-label" for="q31c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q31" id="q31d">
+                                              <label class="circle-label" for="q31d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q32" id="q32a">
+                                              <label class="circle-label" for="q32a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q32" id="q32b">
+                                              <label class="circle-label" for="q32b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q32" id="q32c">
+                                              <label class="circle-label" for="q32c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q32" id="q32d">
+                                              <label class="circle-label" for="q32d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q33" id="q33a">
+                                              <label class="circle-label" for="q33a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q33" id="q33b">
+                                              <label class="circle-label" for="q33b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q33" id="q33c">
+                                              <label class="circle-label" for="q33c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q33" id="q33d">
+                                              <label class="circle-label" for="q33d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q34" id="q34a">
+                                              <label class="circle-label" for="q34a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q34" id="q34b">
+                                              <label class="circle-label" for="q34b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q34" id="q34c">
+                                              <label class="circle-label" for="q34c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q34" id="q34d">
+                                              <label class="circle-label" for="q34d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q35" id="q35a">
+                                              <label class="circle-label" for="q35a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q35" id="q35b">
+                                              <label class="circle-label" for="q35b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q35" id="q35c">
+                                              <label class="circle-label" for="q35c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q35" id="q35d">
+                                              <label class="circle-label" for="q35d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q36" id="q36a">
+                                              <label class="circle-label" for="q36a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q36" id="q36b">
+                                              <label class="circle-label" for="q36b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q36" id="q36c">
+                                              <label class="circle-label" for="q36c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q36" id="q36d">
+                                              <label class="circle-label" for="q36d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q37" id="q37a">
+                                              <label class="circle-label" for="q37a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q37" id="q37b">
+                                              <label class="circle-label" for="q37b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q37" id="q37c">
+                                              <label class="circle-label" for="q37c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q37" id="q37d">
+                                              <label class="circle-label" for="q37d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q38" id="q38a">
+                                              <label class="circle-label" for="q38a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q38" id="q38b">
+                                              <label class="circle-label" for="q38b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q38" id="q38c">
+                                              <label class="circle-label" for="q38c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q38" id="q38d">
+                                              <label class="circle-label" for="q38d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q39" id="q39a">
+                                              <label class="circle-label" for="q39a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q39" id="q39b">
+                                              <label class="circle-label" for="q39b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q39" id="q39c">
+                                              <label class="circle-label" for="q39c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q39" id="q39d">
+                                              <label class="circle-label" for="q39d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q40" id="q40a">
+                                              <label class="circle-label" for="q40a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q40" id="q40b">
+                                              <label class="circle-label" for="q40b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q40" id="q40c">
+                                              <label class="circle-label" for="q40c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q40" id="q40d">
+                                              <label class="circle-label" for="q40d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q41" id="q41a">
+                                              <label class="circle-label" for="q41a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q41" id="q41b">
+                                              <label class="circle-label" for="q41b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q41" id="q41c">
+                                              <label class="circle-label" for="q41c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q41" id="q41d">
+                                              <label class="circle-label" for="q41d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q42" id="q42a">
+                                              <label class="circle-label" for="q42a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q42" id="q42b">
+                                              <label class="circle-label" for="q42b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q42" id="q42c">
+                                              <label class="circle-label" for="q42c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q42" id="q42d">
+                                              <label class="circle-label" for="q42d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q43" id="q43a">
+                                              <label class="circle-label" for="q43a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q43" id="q43b">
+                                              <label class="circle-label" for="q43b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q43" id="q43c">
+                                              <label class="circle-label" for="q43c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q43" id="q43d">
+                                              <label class="circle-label" for="q43d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q44" id="q44a">
+                                              <label class="circle-label" for="q44a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q44" id="q44b">
+                                              <label class="circle-label" for="q44b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q44" id="q44c">
+                                              <label class="circle-label" for="q44c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q44" id="q44d">
+                                              <label class="circle-label" for="q44d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q45" id="q45a">
+                                              <label class="circle-label" for="q45a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q45" id="q45b">
+                                              <label class="circle-label" for="q45b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q45" id="q45c">
+                                              <label class="circle-label" for="q45c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q45" id="q45d">
+                                              <label class="circle-label" for="q45d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                </tr>
+                                                              <tr>
+                                                        <th>
+                                
+                                46
+                              </th>
+                                                        <th>
+                                
+                                47
+                              </th>
+                                                        <th>
+                                
+                                48
+                              </th>
+                                                        <th>
+                                
+                                49
+                              </th>
+                                                        <th>
+                                
+                                50
+                              </th>
+                                                        <th>
+                                
+                                51
+                              </th>
+                                                        <th>
+                                
+                                52
+                              </th>
+                                                        <th>
+                                
+                                53
+                              </th>
+                                                        <th>
+                                
+                                54
+                              </th>
+                                                        <th>
+                                
+                                55
+                              </th>
+                                                        <th>
+                                
+                                56
+                              </th>
+                                                        <th>
+                                
+                                57
+                              </th>
+                                                        <th>
+                                
+                                58
+                              </th>
+                                                        <th>
+                                
+                                59
+                              </th>
+                                                        <th>
+                                
+                                60
+                              </th>
+                                                </tr>
+                      <tr>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q46" id="q46a">
+                                              <label class="circle-label" for="q46a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q46" id="q46b">
+                                              <label class="circle-label" for="q46b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q46" id="q46c">
+                                              <label class="circle-label" for="q46c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q46" id="q46d">
+                                              <label class="circle-label" for="q46d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q47" id="q47a">
+                                              <label class="circle-label" for="q47a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q47" id="q47b">
+                                              <label class="circle-label" for="q47b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q47" id="q47c">
+                                              <label class="circle-label" for="q47c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q47" id="q47d">
+                                              <label class="circle-label" for="q47d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q48" id="q48a">
+                                              <label class="circle-label" for="q48a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q48" id="q48b">
+                                              <label class="circle-label" for="q48b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q48" id="q48c">
+                                              <label class="circle-label" for="q48c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q48" id="q48d">
+                                              <label class="circle-label" for="q48d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q49" id="q49a">
+                                              <label class="circle-label" for="q49a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q49" id="q49b">
+                                              <label class="circle-label" for="q49b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q49" id="q49c">
+                                              <label class="circle-label" for="q49c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q49" id="q49d">
+                                              <label class="circle-label" for="q49d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q50" id="q50a">
+                                              <label class="circle-label" for="q50a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q50" id="q50b">
+                                              <label class="circle-label" for="q50b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q50" id="q50c">
+                                              <label class="circle-label" for="q50c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q50" id="q50d">
+                                              <label class="circle-label" for="q50d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q51" id="q51a">
+                                              <label class="circle-label" for="q51a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q51" id="q51b">
+                                              <label class="circle-label" for="q51b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q51" id="q51c">
+                                              <label class="circle-label" for="q51c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q51" id="q51d">
+                                              <label class="circle-label" for="q51d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q52" id="q52a">
+                                              <label class="circle-label" for="q52a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q52" id="q52b">
+                                              <label class="circle-label" for="q52b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q52" id="q52c">
+                                              <label class="circle-label" for="q52c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q52" id="q52d">
+                                              <label class="circle-label" for="q52d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q53" id="q53a">
+                                              <label class="circle-label" for="q53a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q53" id="q53b">
+                                              <label class="circle-label" for="q53b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q53" id="q53c">
+                                              <label class="circle-label" for="q53c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q53" id="q53d">
+                                              <label class="circle-label" for="q53d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q54" id="q54a">
+                                              <label class="circle-label" for="q54a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q54" id="q54b">
+                                              <label class="circle-label" for="q54b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q54" id="q54c">
+                                              <label class="circle-label" for="q54c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q54" id="q54d">
+                                              <label class="circle-label" for="q54d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q55" id="q55a">
+                                              <label class="circle-label" for="q55a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q55" id="q55b">
+                                              <label class="circle-label" for="q55b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q55" id="q55c">
+                                              <label class="circle-label" for="q55c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q55" id="q55d">
+                                              <label class="circle-label" for="q55d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q56" id="q56a">
+                                              <label class="circle-label" for="q56a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q56" id="q56b">
+                                              <label class="circle-label" for="q56b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q56" id="q56c">
+                                              <label class="circle-label" for="q56c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q56" id="q56d">
+                                              <label class="circle-label" for="q56d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q57" id="q57a">
+                                              <label class="circle-label" for="q57a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q57" id="q57b">
+                                              <label class="circle-label" for="q57b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q57" id="q57c">
+                                              <label class="circle-label" for="q57c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q57" id="q57d">
+                                              <label class="circle-label" for="q57d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q58" id="q58a">
+                                              <label class="circle-label" for="q58a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q58" id="q58b">
+                                              <label class="circle-label" for="q58b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q58" id="q58c">
+                                              <label class="circle-label" for="q58c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q58" id="q58d">
+                                              <label class="circle-label" for="q58d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q59" id="q59a">
+                                              <label class="circle-label" for="q59a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q59" id="q59b">
+                                              <label class="circle-label" for="q59b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q59" id="q59c">
+                                              <label class="circle-label" for="q59c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q59" id="q59d">
+                                              <label class="circle-label" for="q59d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                        <td>
+                                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q60" id="q60a">
+                                              <label class="circle-label" for="q60a">a</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q60" id="q60b">
+                                              <label class="circle-label" for="q60b">b</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q60" id="q60c">
+                                              <label class="circle-label" for="q60c">c</label>
+                                          </div>
+                                                                                                                          <div class="form-check">
+                                              <input class="form-check-input student-answer" type="radio" name="q60" id="q60d">
+                                              <label class="circle-label" for="q60d">d</label>
+                                          </div>
+                                                                        </div>
+                              </td>
+                                                </tr>
+                                </table>
+          </div>
+
+          <div class="col-3">
+              <table style="width:100%;">
+                  <tr><th>Student ID</th></tr>
+                  <tr><td>
+                      
+                        <div style="height:50px"></div> 
+                                      </td></tr>
+              </table>
+
+              <table style="width:100%;">
+                  <tr><th>Subject Code</th></tr>
+                  <tr><td>
+                      
+                        <div style="height:50px"></div> 
+                                      </td></tr>
+              </table>
+
+              <table style="width:100%;">
+                  <tr><th>Total Marks</th></tr>
+                  <tr>
+                    <td>
+                          
+                           <div style="height:106px"></div> 
+                                            </td>
+                  </tr>
+              </table>
+
+                            
+          </div>
+      </div>
+  </div>
+
+<div id="questionsContainer">
+
+</div>        
+
+
+
+
+
+
+
+        <div id="footer">
+            <center>
+            </center>
+        </div>
+    </div>
+</page>
+
+
+
+<div class="container print">
+    <h5>Correct answare (Provided by teacher)</h5>
+
+    <div class="box">
+        <table>
+
+            
+        </table>
+    </div>
+</div>
+
+
+  
+
+<script>
+document.querySelectorAll('.student-answer').forEach(input => {
+    input.addEventListener('change', calculateMarks);
+});
+document.querySelectorAll('.teacher-answer').forEach(input => {
+    input.addEventListener('change', calculateMarks);
+});
+function calculateMarks() {
+    let total = 0;
+    for (let i = 1; i <= 0; i++) {
+        const correct = document.querySelector(`input[name="a${i}"]:checked`);
+        const student = document.querySelector(`input[name="q${i}"]:checked`);
+        if (correct && student) {
+            const correctLabel = document.querySelector(`label[for="${correct.id}"]`);
+            const studentLabel = document.querySelector(`label[for="${student.id}"]`);
+            if (correctLabel.textContent.trim() === studentLabel.textContent.trim()) {
+                total++;
+            }
+        }
+    }
+    document.getElementById('total-marks').innerText = toBanglaDigit(total);
+    function toBanglaDigit(number) {
+        const engToBn = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+        return number.toString().replace(/[0-9]/g, d => engToBn[d]);
+    }
+}
+</script>
+
+
+
+<!-- Modal -->
+  <div id="questionModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h3>নতুন প্রশ্ন যোগ করুন</h3>
+      <form id="questionForm">
+        <label>প্রশ্ন</label>
+        <input type="text" id="questionInput" required>
+        
+        <label>অপশন (ক)</label>
+        <input type="text" id="optA" required>
+        
+        <label>অপশন (খ)</label>
+        <input type="text" id="optB" required>
+        
+        <label>অপশন (গ)</label>
+        <input type="text" id="optC" required>
+        
+        <label>অপশন (ঘ)</label>
+        <input type="text" id="optD" required>
+        
+        <button type="submit">যোগ করুন</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let questionCount = 0;
+    const modal = document.getElementById("questionModal");
+    const openBtn = document.getElementById("openModalBtn");
+    const closeBtn = document.getElementById("closeModal");
+    const form = document.getElementById("questionForm");
+    const container = document.getElementById("questionsContainer");
+
+    openBtn.onclick = () => { modal.style.display = "block"; };
+    closeBtn.onclick = () => { modal.style.display = "none"; };
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      questionCount++;
+
+      const question = document.getElementById("questionInput").value;
+      const optA = document.getElementById("optA").value;
+      const optB = document.getElementById("optB").value;
+      const optC = document.getElementById("optC").value;
+      const optD = document.getElementById("optD").value;
+
+      const newBlock = document.createElement("div");
+      newBlock.style.paddingLeft = "50px";
+      newBlock.style.paddingRight = "50px";
+      newBlock.style.paddingBottom = "20px";
+      newBlock.innerHTML = `
+        <h4>প্রশ্ন ${questionCount}: ${question}</h4>
+        <div style="width:100%;display:flex;">
+          <div style="width:25%;word-wrap: break-word;">(ক) ${optA}</div>
+          <div style="width:25%;word-wrap: break-word;">(খ) ${optB}</div>
+          <div style="width:25%;word-wrap: break-word;">(গ) ${optC}</div>
+          <div style="width:25%;word-wrap: break-word;">(ঘ) ${optD}</div>
+        </div>
+      `;
+      container.appendChild(newBlock);
+
+      form.reset();
+      modal.style.display = "none";
+    });
+  </script>
+
+
+</body>
+</html>
